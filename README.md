@@ -86,7 +86,7 @@ Prasyarat skrip: ffmpeg (sudah terpasang via winget, 2026-07-23).
 
 ## Kustomisasi cepat
 
-- **Nomor WhatsApp**: ganti `6281234567890` di `penawaran.html`.
+- **Nomor WhatsApp**: ganti `6281314708898` di `penawaran.html`.
 - **Email**: `ali.coolz30@gmail.com` di `index.html` & `penawaran.html`.
 - **Harga paket**: bagian `#paket` di `penawaran.html` — angka titik awal, sesuaikan.
 - **Copy scene**: objek `sections` di `index.html`.

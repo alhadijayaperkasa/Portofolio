@@ -331,6 +331,87 @@
       .cards { grid-template-columns: 1fr; }
       #lanjutan footer { justify-content: flex-start; }
     }
+
+    /* ── Mobile Sidebar ──────────────────────────────────────────────── */
+    .mobile-hamburger {
+      display: none; position: fixed; top: clamp(14px,2.4vw,26px); right: clamp(18px,5vw,64px);
+      z-index: 200; border: 0; background: transparent; cursor: pointer;
+      width: 44px; height: 44px; padding: 0;
+    }
+    .mobile-hamburger span {
+      display: block; width: 26px; height: 2px; margin: 0 auto;
+      background: var(--sw-ink, #EAF2FF); border-radius: 2px;
+      transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .25s;
+    }
+    .mobile-hamburger span + span { margin-top: 7px; }
+    .mobile-hamburger.is-open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .mobile-hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .mobile-hamburger.is-open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0; z-index: 190;
+      background: rgba(6, 10, 22, .6); backdrop-filter: blur(8px);
+      opacity: 0; transition: opacity .35s;
+    }
+    .sidebar-overlay.is-visible { display: block; opacity: 1; }
+
+    .mobile-sidebar {
+      position: fixed; top: 0; right: -320px; bottom: 0; z-index: 195;
+      width: min(320px, 85vw);
+      background: linear-gradient(165deg, rgba(22, 24, 38, .96), rgba(10, 15, 30, .98));
+      backdrop-filter: blur(24px) saturate(1.4);
+      border-left: 1px solid color-mix(in srgb, var(--color-accent, #9184d9) 18%, transparent);
+      box-shadow: -12px 0 48px rgba(0,0,0,.4);
+      padding: 90px 32px 40px;
+      overflow-y: auto; overscroll-behavior: contain;
+      transition: right .4s cubic-bezier(.22,1,.36,1);
+    }
+    .mobile-sidebar.is-open { right: 0; }
+
+    .mobile-sidebar__label {
+      display: block; font-family: var(--font-heading); font-weight: 500;
+      font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: color-mix(in srgb, var(--color-text, #e9e9ed) 40%, transparent);
+      margin: 0 0 14px 4px;
+    }
+    .mobile-sidebar__link {
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--font-heading); font-weight: 500;
+      font-size: 15px; line-height: 1.2; color: color-mix(in srgb, var(--color-text, #e9e9ed) 82%, transparent);
+      text-decoration: none; padding: 13px 16px; border-radius: 10px;
+      transition: background .25s, color .25s, transform .2s;
+    }
+    .mobile-sidebar__link:hover,
+    .mobile-sidebar__link:focus-visible {
+      background: color-mix(in srgb, var(--color-accent, #9184d9) 12%, transparent);
+      color: var(--color-text, #e9e9ed); transform: translateX(4px);
+    }
+    .mobile-sidebar__link i.ph {
+      font-size: 20px; color: var(--color-accent, #9184d9); width: 24px; text-align: center;
+    }
+    .mobile-sidebar__divider {
+      height: 1px; border: 0; margin: 20px 4px;
+      background: linear-gradient(to right, color-mix(in srgb, var(--color-text, #e9e9ed) 12%, transparent), transparent);
+    }
+    .mobile-sidebar__cta {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: var(--font-heading); font-weight: 600;
+      font-size: 14px; text-decoration: none;
+      padding: 14px 20px; border-radius: 12px; margin-top: 10px;
+      color: #06121F; background: var(--color-accent, #9184d9);
+      box-shadow: 0 6px 24px color-mix(in srgb, var(--color-accent, #9184d9) 35%, transparent);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .mobile-sidebar__cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px color-mix(in srgb, var(--color-accent, #9184d9) 50%, transparent);
+    }
+    .mobile-sidebar__cta i.ph { font-size: 18px; }
+
+    @media (max-width: 860px) {
+      .mobile-hamburger { display: grid; place-items: center; }
+      .sw-topcta { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -348,6 +429,49 @@
     <button type="button" data-target="#serah-terima"><span class="lbl">Serah Terima</span><i></i></button>
     <button type="button" data-target="#mulai"><span class="lbl">Mulai</span><i></i></button>
   </nav>
+
+  <!-- Mobile hamburger -->
+  <button class="mobile-hamburger" id="hamburger" type="button" aria-label="Buka menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Mobile sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Mobile sidebar -->
+  <aside class="mobile-sidebar" id="mobileSidebar">
+    <span class="mobile-sidebar__label">Navigasi</span>
+    <a class="mobile-sidebar__link" href="#portofolio" data-sidebar-nav>
+      <i class="ph ph-briefcase"></i>Portofolio
+    </a>
+    <a class="mobile-sidebar__link" href="#arsitektur" data-sidebar-nav>
+      <i class="ph ph-stack"></i>Arsitektur
+    </a>
+    <a class="mobile-sidebar__link" href="#keamanan" data-sidebar-nav>
+      <i class="ph ph-shield-check"></i>Keamanan
+    </a>
+    <a class="mobile-sidebar__link" href="#ai-lanjut" data-sidebar-nav>
+      <i class="ph ph-brain"></i>Fitur AI
+    </a>
+    <a class="mobile-sidebar__link" href="#proses" data-sidebar-nav>
+      <i class="ph ph-flow-arrow"></i>Cara Kerja
+    </a>
+    <a class="mobile-sidebar__link" href="#serah-terima" data-sidebar-nav>
+      <i class="ph ph-package"></i>Serah Terima
+    </a>
+    <hr class="mobile-sidebar__divider">
+    <span class="mobile-sidebar__label">Lainnya</span>
+    <a class="mobile-sidebar__link" href="penawaran.html">
+      <i class="ph ph-tag"></i>Penawaran &amp; Harga
+    </a>
+    <a class="mobile-sidebar__link" href="#mulai" data-sidebar-nav>
+      <i class="ph ph-rocket-launch"></i>Mulai Proyek
+    </a>
+    <hr class="mobile-sidebar__divider">
+    <a class="mobile-sidebar__cta" href="https://wa.me/6281314708898?text=Halo%20Alhadi%20Cyber%20Media%2C%20saya%20ingin%20konsultasi%20proyek." target="_blank" rel="noopener">
+      <i class="ph ph-whatsapp-logo"></i>Chat WhatsApp
+    </a>
+  </aside>
 
   <main id="lanjutan">
     <div class="doc-glow"></div>
@@ -891,7 +1015,7 @@
           <h2>Bidang usaha Anda, <em>solusi berikutnya yang kami bangun.</em></h2>
           <p class="sub">Konsultasi awal gratis — rekomendasi teknologi, gambaran fitur, dan estimasi biaya, tanpa komitmen apa pun.</p>
           <div class="row-cta">
-            <a class="btn btn-primary" href="https://wa.me/6281234567890?text=Halo%20Alhadi%20Cyber%20Media%2C%20saya%20ingin%20konsultasi%20proyek." target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i>Chat WhatsApp</a>
+            <a class="btn btn-primary" href="https://wa.me/6281314708898?text=Halo%20Alhadi%20Cyber%20Media%2C%20saya%20ingin%20konsultasi%20proyek." target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i>Chat WhatsApp</a>
             <a class="btn btn-secondary" href="penawaran.html">Lihat penawaran &amp; harga</a>
             <a class="btn btn-ghost" href="#top">Ulangi perjalanan</a>
           </div>
@@ -1143,6 +1267,56 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll);
       frame();
+    })();
+
+    // ── Mobile Sidebar ──────────────────────────────────────────────────
+    (function () {
+      const hamburger = document.getElementById('hamburger');
+      const sidebar = document.getElementById('mobileSidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (!hamburger || !sidebar || !overlay) return;
+
+      function open() {
+        hamburger.classList.add('is-open');
+        sidebar.classList.add('is-open');
+        overlay.classList.add('is-visible');
+        hamburger.setAttribute('aria-label', 'Tutup menu');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        hamburger.classList.remove('is-open');
+        sidebar.classList.remove('is-open');
+        overlay.classList.remove('is-visible');
+        hamburger.setAttribute('aria-label', 'Buka menu');
+        document.body.style.overflow = '';
+      }
+
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.contains('is-open') ? close() : open();
+      });
+      overlay.addEventListener('click', close);
+
+      // Close sidebar when any nav link is clicked & smooth-scroll
+      sidebar.querySelectorAll('[data-sidebar-nav]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          close();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (target) {
+            setTimeout(() => {
+              window.scrollTo({
+                top: target.getBoundingClientRect().top + window.scrollY - 76,
+                behavior: 'smooth'
+              });
+            }, 350);
+          }
+        });
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('is-open')) close();
+      });
     })();
   </script>
 </body>
