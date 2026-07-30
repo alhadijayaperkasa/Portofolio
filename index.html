@@ -190,6 +190,22 @@
       .tile::before {
         height: 100% !important;
       }
+      /* Disable heavy spinning animations on mobile to prevent GPU reflow / text flickering */
+      .portfolio-card::before,
+      .tile.rev::before,
+      .border-beam-card::before,
+      .platform-modal-content::before {
+        animation: none !important;
+        opacity: 0.12 !important; /* Static subtle border glow on mobile */
+      }
+      /* Disable moving text shimmer to prevent WebKit clipping repaint flicker on scroll */
+      .sec-head h2 em, .close h2 em {
+        animation: none !important;
+        background: linear-gradient(to right, #22D3EE, #818CF8) !important;
+        color: transparent !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+      }
     }
 
     /* Extra responsive layout stacks for mobile UI components */

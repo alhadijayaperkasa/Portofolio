@@ -234,8 +234,10 @@
     transparent 220deg,
     transparent 360deg
   );
-  animation: border-beam-spin 8s linear infinite;
   z-index: -2;
+}
+.platform-modal.is-open .platform-modal-content::before {
+  animation: border-beam-spin 8s linear infinite;
 }
 .platform-modal-content::after {
   content: "";
@@ -739,7 +741,6 @@ textarea.form-control { min-height: 80px; resize: vertical; }
     transparent 220deg,
     transparent 360deg
   );
-  animation: border-beam-spin 6s linear infinite;
   z-index: -2;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -755,6 +756,7 @@ textarea.form-control { min-height: 80px; resize: vertical; }
 }
 .tile.rev:hover::before {
   opacity: 1;
+  animation: border-beam-spin 6s linear infinite;
 }
 .tile.rev:hover::after {
   background: #11162d; /* Hover state bg */
@@ -852,7 +854,6 @@ textarea.form-control { min-height: 80px; resize: vertical; }
     transparent 220deg,
     transparent 360deg
   );
-  animation: border-beam-spin 6s linear infinite;
   z-index: -2;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -872,6 +873,7 @@ textarea.form-control { min-height: 80px; resize: vertical; }
 }
 .portfolio-card:hover::before {
   opacity: 1;
+  animation: border-beam-spin 6s linear infinite;
 }
 .portfolio-card:hover::after {
   background: #11162d; /* Hover background color */
