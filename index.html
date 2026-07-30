@@ -113,37 +113,94 @@
       box-shadow: 0 0 20px rgba(34, 211, 238, 0.35);
       transform: translateY(-2px);
     }
-    /* Hero Copy Layer Size Overrides */
-    .sw-copy__title {
-      font-size: clamp(2.4rem, 5vw, 4rem) !important;
-      line-height: 1.05 !important;
-      letter-spacing: -0.025em !important;
-      font-weight: 800 !important;
+    /* Desktop Hero Size Overrides */
+    @media (min-width: 861px) {
+      .sw-copy {
+        top: 45% !important;
+        transform: translateY(-50%) !important;
+        width: min(54vw, 540px) !important;
+      }
+      .sw-copylayer::before {
+        width: min(65vw, 860px) !important;
+      }
+      .sw-copy__title {
+        font-size: clamp(2.4rem, 5vw, 4rem) !important;
+        line-height: 1.05 !important;
+        letter-spacing: -0.025em !important;
+        font-weight: 800 !important;
+      }
+      .sw-copy__body {
+        font-size: clamp(1.05rem, 1.4vw, 1.25rem) !important;
+        line-height: 1.6 !important;
+        max-width: 44ch !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
     }
-    .sw-copy__body {
-      font-size: clamp(1.05rem, 1.4vw, 1.25rem) !important;
-      line-height: 1.6 !important;
-      max-width: 44ch !important;
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
-    /* Hero Copy Layer Position & Sizing Overrides (Raised and Widened) */
-    .sw-copy {
-      top: 45% !important;
-      transform: translateY(-50%) !important;
-      width: min(54vw, 540px) !important;
-    }
-    .sw-copylayer::before {
-      width: min(65vw, 860px) !important;
-    }
+
+    /* Mobile Hero & Responsiveness Optimizations (width <= 860px) */
     @media (max-width: 860px) {
       .sw-copy {
         top: auto !important;
         transform: none !important;
         width: auto !important;
         max-width: 560px !important;
+        bottom: calc(clamp(40px, 10dvh, 80px) + env(safe-area-inset-bottom)) !important;
       }
       .sw-copylayer::before {
         width: 100% !important;
+      }
+      .sw-copy__title {
+        font-size: clamp(1.5rem, 5.5vw, 2.1rem) !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.015em !important;
+        font-weight: 800 !important;
+        margin-top: 6px !important;
+      }
+      .sw-copy__body {
+        font-size: clamp(0.82rem, 3vw, 0.95rem) !important;
+        line-height: 1.45 !important;
+        color: rgba(255, 255, 255, 0.75) !important;
+        margin-top: 8px !important;
+        max-width: 100% !important;
+      }
+      .sw-copy__tags {
+        margin-top: 10px !important;
+        gap: 6px !important;
+      }
+      .sw-copy__tags li {
+        font-size: 0.72rem !important;
+        padding: 4px 8px !important;
+      }
+      .sw-copy__cta {
+        margin-top: 14px !important;
+        gap: 8px !important;
+      }
+      .sw-btn {
+        font-size: 0.82rem !important;
+        padding: 9px 16px !important;
+      }
+    }
+
+    /* Extra responsive layout stacks for mobile UI components */
+    @media (max-width: 640px) {
+      .spec-features-list {
+        grid-template-columns: 1fr !important;
+      }
+      .close .row-cta {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+      }
+      .close .row-cta .btn {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+      }
+      #lanjutan footer {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 16px !important;
       }
     }
     @keyframes button-shimmer {
@@ -1559,7 +1616,7 @@
     //  Set false untuk kembali ke mode poster saja (tanpa video).
     // ============================================================
     const PAKAI_VIDEO = true;
-    const vid = (name) => PAKAI_VIDEO ? { clip: `assets/vid/${name}.mp4`, clipMobile: `assets/vid/${name}-m.mp4` } : {};
+    const vid = (name) => PAKAI_VIDEO ? { clip: `assets/vid/${name}.mp4`, clipMobile: `assets/vid/${name}.mp4` } : {};
     // Poster tiap scene = frame pertama videonya (dibuat otomatis oleh flow/proses.sh).
     // `n` boleh angka atau string ('1b') karena scene 1 dipotong dua beat.
     const pic = (n) => `assets/poster/scene${n}.jpg`;
@@ -1648,7 +1705,7 @@
         ? [null, 'assets/vid/conn1.mp4', 'assets/vid/conn2.mp4', 'assets/vid/conn3.mp4', null]
         : [],
       connectorsMobile: PAKAI_VIDEO
-        ? [null, 'assets/vid/conn1-m.mp4', 'assets/vid/conn2-m.mp4', 'assets/vid/conn3-m.mp4', null]
+        ? [null, 'assets/vid/conn1.mp4', 'assets/vid/conn2.mp4', 'assets/vid/conn3.mp4', null]
         : [],
     });
 
