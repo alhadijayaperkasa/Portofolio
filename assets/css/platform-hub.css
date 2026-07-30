@@ -612,7 +612,6 @@ textarea.form-control { min-height: 80px; resize: vertical; }
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 .reveal-on-scroll.revealed {
   opacity: 1 !important;

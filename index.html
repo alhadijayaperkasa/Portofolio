@@ -179,6 +179,17 @@
         font-size: 0.82rem !important;
         padding: 9px 16px !important;
       }
+      /* Disable dynamic scroll reveals on mobile to prevent GPU layer flickering */
+      .rev {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .row-num::after {
+        width: 44px !important;
+      }
+      .tile::before {
+        height: 100% !important;
+      }
     }
 
     /* Extra responsive layout stacks for mobile UI components */
@@ -417,8 +428,7 @@
        keadaan elemen (--t, 0..1) lewat satu rAF — bukan animasi yang
        berjalan sendiri. Karena itu tetap aman di reduced-motion.
        ───────────────────────────────────────────────────────────────── */
-    .rev { --t: 0; opacity: var(--t); transform: translateY(calc((1 - var(--t)) * 30px));
-      will-change: opacity, transform; }
+    .rev { --t: 0; opacity: var(--t); transform: translateY(calc((1 - var(--t)) * 30px)); }
     .row + .row::before { background-repeat: no-repeat; background-size: calc(var(--t) * 100%) 1px; }
     .row-num::after { content: ""; position: absolute; left: 0; bottom: -7px; height: 1px;
       width: calc(var(--t) * 44px); background: var(--color-accent); }
@@ -1949,11 +1959,13 @@
         const top = lanjutan.offsetTop - y;
         if (top > vh + 240) return;
 
-        // Hitung --t untuk detail garis gambar agar tetap responsif ke scroll
-        for (const el of revs) {
-          const r = el.getBoundingClientRect();
-          if (r.bottom < -240 || r.top > vh + 240) continue;
-          el.style.setProperty('--t', ease((vh * 1.02 - r.top) / (vh * 0.32)).toFixed(3));
+        // Hitung --t untuk detail garis gambar agar tetap responsif ke scroll (hanya untuk desktop)
+        if (window.innerWidth > 860) {
+          for (const el of revs) {
+            const r = el.getBoundingClientRect();
+            if (r.bottom < -240 || r.top > vh + 240) continue;
+            el.style.setProperty('--t', ease((vh * 1.02 - r.top) / (vh * 0.32)).toFixed(3));
+          }
         }
 
         const span = Math.max(1, lanjutan.offsetHeight - vh);
