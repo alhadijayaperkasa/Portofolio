@@ -419,3 +419,13 @@ textarea.form-control { min-height: 80px; resize: vertical; }
   .sw-nav { display: none !important; }
   .sw-topcta { display: none !important; }
 }
+
+/* Responsive Desktop topbar spacing scaling to prevent overflow */
+@media (min-width: 861px) and (max-width: 1120px) {
+  .sw-topbar { padding: 12px 20px !important; gap: 8px !important; }
+  .sw-nav { gap: 2px !important; padding: 4px !important; }
+  .sw-nav__item { padding: 5px 8px !important; font-size: 0.75rem !important; }
+  .sw-brand__name { font-size: 0.95rem !important; }
+  .user-nav-btn { padding: 6px 10px !important; font-size: 11px !important; }
+  .sw-topcta { padding: 8px 14px !important; font-size: 0.8rem !important; }
+}

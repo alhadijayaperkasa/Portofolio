@@ -112,8 +112,8 @@
        ───────────────────────────────────────────────────────────────── */
     #lanjutan {
       position: relative; z-index: 45; background: var(--color-bg);
-      font-family: var(--font-body); color: var(--color-text); font-size: 15px;
-      line-height: 1.55;
+      font-family: var(--font-body); color: var(--color-text); font-size: 16px;
+      line-height: 1.65;
     }
     #lanjutan *, #lanjutan *::before, #lanjutan *::after { box-sizing: border-box; }
     #lanjutan .wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); }
@@ -938,9 +938,9 @@
         </div>
 
         <div class="spec-wizard-card rev">
-          <div class="spec-wizard-grid">
+          <div class="spec-wizard-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 24px;">
             <div class="form-group">
-              <label><i class="ph ph-app-window"></i> Jenis Aplikasi / Website</label>
+              <label><i class="ph ph-app-window" style="color:#22D3EE;"></i> Jenis Aplikasi / Website</label>
               <select id="specAppType" class="form-control">
                 <option value="website">Website Company Profile / Landing Page</option>
                 <option value="webapp" selected>WebApp Custom &amp; Portal Bisnis</option>
@@ -948,43 +948,76 @@
                 <option value="mobile">PWA Mobile &amp; Kasir POS Digital</option>
               </select>
             </div>
+            
             <div class="form-group">
-              <label><i class="ph ph-chart-line-up"></i> Skala Pengguna / Bisnis</label>
+              <label><i class="ph ph-chart-line-up" style="color:#22D3EE;"></i> Skala Pengguna &amp; Trafik</label>
               <select id="specScale" class="form-control">
-                <option value="umkm">UMKM / Startup Tahap Awal</option>
-                <option value="growth" selected>Bisnis Berkembang (Ribuan Transaksi)</option>
-                <option value="enterprise">Enterprise (High Traffic &amp; High Availability)</option>
+                <option value="umkm">UMKM / Trafik Rendah (Biaya Server Minimal)</option>
+                <option value="growth" selected>Bisnis Berkembang / Traffic Sedang</option>
+                <option value="enterprise">Enterprise / High Traffic &amp; High Availability</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label><i class="ph ph-cloud-arrow-up" style="color:#22D3EE;"></i> Infrastruktur &amp; Cloud Hosting</label>
+              <select id="specCloud" class="form-control">
+                <option value="free">Solusi Hemat/Gratis (Vercel / Netlify / Cloudflare Pages)</option>
+                <option value="standard" selected>Dedicated VPS Kinerja Tinggi (DigitalOcean / Linode / VPS)</option>
+                <option value="premium">Premium Cloud (AWS / Google Cloud Platform / Multi-Region)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label><i class="ph ph-database" style="color:#22D3EE;"></i> Backend &amp; Database</label>
+              <select id="specBackend" class="form-control">
+                <option value="insforge" selected>InsForge BaaS (Database + Realtime + Auth + Storage)</option>
+                <option value="supabase">Supabase Open-Source BaaS</option>
+                <option value="postgres">PostgreSQL Dedicated Mandiri</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label><i class="ph ph-brain" style="color:#22D3EE;"></i> Modul Kecerdasan Buatan (AI)</label>
+              <select id="specAI" class="form-control">
+                <option value="none">Tanpa Fitur AI (Aplikasi Standar)</option>
+                <option value="free_ai" selected>AI Hemat / Gratis (Gemini API Free + Speech Browser + OCR Client)</option>
+                <option value="premium_ai">AI Premium (OpenAI GPT-4o/Claude 3. Sonnet + Custom RAG Vector DB)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label><i class="ph ph-credit-card" style="color:#22D3EE;"></i> Pembayaran &amp; Transaksi</label>
+              <select id="specPayment" class="form-control">
+                <option value="none">Tanpa Pembayaran (Situs Informasi/Katalog)</option>
+                <option value="qris" selected>Payment Gateway QRIS &amp; Virtual Account Lokal (Midtrans/Xendit)</option>
+                <option value="stripe">Stripe Payments (Internasional &amp; Kartu Kredit)</option>
               </select>
             </div>
           </div>
 
           <div class="form-group">
-            <label><i class="ph ph-check-square-offset"></i> Fitur-Fitur Spesifik yang Dibutuhkan</label>
-            <div class="spec-features-list">
+            <label><i class="ph ph-sliders" style="color:#22D3EE;"></i> Fitur Keamanan &amp; Tambahan</label>
+            <div class="spec-features-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 6px;">
               <label class="spec-feature-item">
-                <input type="checkbox" value="auth" class="spec-feature-check" checked>
-                <span>Autentikasi (Google OAuth &amp; OTP)</span>
+                <input type="checkbox" id="featureAuth" checked>
+                <span>Google OAuth &amp; 2FA</span>
               </label>
               <label class="spec-feature-item">
-                <input type="checkbox" value="qris" class="spec-feature-check" checked>
-                <span>Payment QRIS &amp; Virtual Account</span>
+                <input type="checkbox" id="featureWaf" checked>
+                <span>Cloudflare WAF / Anti-DDoS</span>
               </label>
               <label class="spec-feature-item">
-                <input type="checkbox" value="ai_chatbot" class="spec-feature-check" checked>
-                <span>AI Chatbot Customer Service (RAG)</span>
+                <input type="checkbox" id="featureBackup" checked>
+                <span>Automated Daily Backup</span>
               </label>
               <label class="spec-feature-item">
-                <input type="checkbox" value="ocr" class="spec-feature-check">
-                <span>OCR Scanning Dokumen (Tesseract)</span>
-              </label>
-              <label class="spec-feature-item">
-                <input type="checkbox" value="speech" class="spec-feature-check">
-                <span>Web Speech Input &amp; Audio</span>
+                <input type="checkbox" id="featureAnalytics">
+                <span>Google Analytics &amp; SEO Tools</span>
               </label>
             </div>
           </div>
 
-          <button type="button" class="btn-platform-primary" onclick="calculateSpecRecommendation()">
+          <button type="button" class="btn-platform-primary" onclick="calculateSpecRecommendation()" style="margin-top: 10px;">
             <i class="ph ph-calculator"></i> Hitung Rekomendasi Spesifikasi &amp; Cetak Biru
           </button>
 

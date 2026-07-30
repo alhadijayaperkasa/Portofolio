@@ -20,6 +20,7 @@
         anonKey: INSFORGE_ANON
       });
       window.insforgeClient = insforge;
+      ensureModalsExist();
       checkAuthStatus();
     } else {
       setTimeout(initSDK, 100);
@@ -596,80 +597,193 @@
   window.calculateSpecRecommendation = function () {
     const appType = document.getElementById('specAppType').value;
     const scale = document.getElementById('specScale').value;
-    const features = Array.from(document.querySelectorAll('.spec-feature-check:checked')).map(c => c.value);
+    const cloud = document.getElementById('specCloud').value;
+    const backend = document.getElementById('specBackend').value;
+    const ai = document.getElementById('specAI').value;
+    const payment = document.getElementById('specPayment').value;
+
+    const featureAuth = document.getElementById('featureAuth').checked;
+    const featureWaf = document.getElementById('featureWaf').checked;
+    const featureBackup = document.getElementById('featureBackup').checked;
+    const featureAnalytics = document.getElementById('featureAnalytics').checked;
 
     let resultStack = [];
     let resultAi = [];
-    let estBudget = '';
+    let basePrice = 0;
+    let serverCost = '';
     let estDuration = '';
     let architectureNote = '';
 
+    // 1. Calculate Base Price and Tech Stack according to App Type & Scale
     if (appType === 'website') {
-      resultStack = ['Astro / Next.js', 'Tailwind CSS', 'Cloudflare CDN'];
-      estBudget = scale === 'enterprise' ? '8 – 15 Juta' : '3.5 – 7 Juta';
-      estDuration = '5 – 10 Hari Kerja';
-      architectureNote = 'SSR/SSG imersif, SEO tingkat tinggi, loading di bawah 1 detik, aman dari DDoS.';
+      resultStack = ['Astro / Next.js', 'Tailwind CSS', 'Vite'];
+      basePrice = 4000000;
+      estDuration = '5 – 8 Hari Kerja';
+      architectureNote = 'Website statik supercepat dengan integrasi SEO tingkat lanjut & loading kurang dari 1 detik.';
     } else if (appType === 'webapp') {
-      resultStack = ['React / Next.js', 'Node.js Express', 'PostgreSQL', 'Redis'];
-      estBudget = scale === 'enterprise' ? '25 – 60 Juta' : '12 – 22 Juta';
-      estDuration = '3 – 6 Minggu';
-      architectureNote = 'Arsitektur modular, role-based auth, dashboard admin realtime, auto backup data.';
+      resultStack = ['React / Next.js', 'Tailwind CSS', 'Node.js API'];
+      basePrice = 14000000;
+      estDuration = '3 – 4 Minggu';
+      architectureNote = 'Web Application kustom dengan dashboard admin interaktif, sistem hak akses pengguna, dan rekap data.';
     } else if (appType === 'saas') {
-      resultStack = ['Next.js App Router', 'PostgreSQL + Supabase', 'Docker', 'Midtrans / Xendit'];
-      estBudget = scale === 'enterprise' ? '45 – 90 Juta' : '20 – 38 Juta';
-      estDuration = '1 – 2 Bulan';
-      architectureNote = 'Multi-tenant architecture, sistem langganan otomatis, rate limiting & 2FA security.';
+      resultStack = ['Next.js App Router', 'Tailwind CSS', 'Node.js Serverless'];
+      basePrice = 28000000;
+      estDuration = '5 – 8 Minggu';
+      architectureNote = 'Platform SaaS Multi-Tenant dengan manajemen langganan (billing), pendaftaran otomatis tenancies, dan proteksi API.';
+    } else if (appType === 'mobile') {
+      resultStack = ['React Native / PWA', 'Tailwind CSS', 'FastAPI / Express'];
+      basePrice = 18000000;
+      estDuration = '4 – 5 Minggu';
+      architectureNote = 'Aplikasi PWA/Kasir POS responsif yang dapat diinstal langsung di Android/iOS dengan dukungan mode offline-first.';
+    }
+
+    // 2. Adjust for Scale & Trafik
+    if (scale === 'umkm') {
+      basePrice *= 0.85; // discount for simplified UMKM version
+      architectureNote += ' Dioptimalkan untuk efisiensi biaya awal.';
+    } else if (scale === 'enterprise') {
+      basePrice *= 1.8; // premium scale
+      // Double the duration numbers
+      estDuration = estDuration.replace(/([0-9]+)/g, (match) => Math.round(parseInt(match) * 1.5));
+      architectureNote += ' Dilengkapi infrastruktur kluster dengan skalabilitas horizontal otomatis.';
+    }
+
+    // 3. Infrastructure & Cloud Hosting Plan (Free vs Premium)
+    let hostingDetails = '';
+    if (cloud === 'free') {
+      resultStack.push('Cloudflare Pages (Gratis)', 'Vercel Serverless (Gratis)');
+      serverCost = 'Rp 0 / Bulan (Selamanya Gratis untuk Trafik Wajar)';
+      hostingDetails = 'Infrastruktur Serverless Gratis';
+      basePrice += 0;
+    } else if (cloud === 'standard') {
+      resultStack.push('Dedicated VPS (DigitalOcean/Linode)');
+      serverCost = 'Rp 150.000 – Rp 450.000 / Bulan (Tergantung RAM/CPU)';
+      hostingDetails = 'Dedicated VPS Hosting';
+      basePrice += 1500000; // VPS setup fee
+    } else if (cloud === 'premium') {
+      resultStack.push('AWS EC2 / Google Cloud Engine', 'Auto-scaling Cluster', 'Multi-zone RDS');
+      serverCost = 'Rp 1.500.000 – Rp 4.500.000+ / Bulan (Pay-as-you-use)';
+      hostingDetails = 'Premium Cloud Infrastructure (AWS/GCP)';
+      basePrice += 4500000; // Cloud Cluster setup fee
+    }
+
+    // 4. Backend & Database
+    if (backend === 'insforge') {
+      resultStack.push('InsForge BaaS Client SDK', 'PostgreSQL (InsForge Cloud)');
+      architectureNote += ' Backend terintegrasi penuh menggunakan InsForge (Auth, DB RLS, Storage).';
+    } else if (backend === 'supabase') {
+      resultStack.push('Supabase BaaS Client', 'PostgreSQL Database');
+      architectureNote += ' Menggunakan Supabase client BaaS open-source.';
+    } else if (backend === 'postgres') {
+      resultStack.push('Dedicated PostgreSQL', 'Docker Database Container');
+      architectureNote += ' Database PostgreSQL murni yang di-host mandiri pada VPS Anda.';
+    }
+
+    // 5. AI Module
+    if (ai === 'free_ai') {
+      resultStack.push('Gemini AI API (Free Tier)', 'Web Speech API (Browser)', 'Tesseract.js OCR (Client-side)');
+      resultAi = ['Gemini AI Chatbot (Free)', 'Web Speech Voice Input', 'Client OCR Scanning'];
+      serverCost += ' + Biaya AI Rp 0 (Free Gemini API)';
+      basePrice += 2500000;
+    } else if (ai === 'premium_ai') {
+      resultStack.push('OpenAI GPT-4o API', 'Claude 3.5 Sonnet API', 'Vector Database PGVector');
+      resultAi = ['Premium AI Chatbot CS (Custom RAG)', 'Pencarian Semantik Vector', 'Analisis Prediktif Data'];
+      serverCost += ' + Biaya AI berbayar sesuai pemakaian token API (Pay-as-you-use)';
+      basePrice += 8000000;
     } else {
-      resultStack = ['React Native / PWA', 'Laravel / Node.js API', 'PostgreSQL'];
-      estBudget = '15 – 35 Juta';
-      estDuration = '3 – 5 Minggu';
-      architectureNote = 'Cross-platform PWA offline-first, push notification browser & WhatsApp gateway.';
+      resultAi = ['Tanpa Modul AI'];
     }
 
-    if (features.includes('auth')) {
-      architectureNote += ' + Autentikasi OAuth Google & OTP WhatsApp.';
-    }
-    if (features.includes('qris')) {
-      resultStack.push('Midtrans / QRIS Automatic Hook');
-    }
-    if (features.includes('ai_chatbot')) {
-      resultAi.push('AI Chatbot Custom Data (RAG)');
-    }
-    if (features.includes('ocr')) {
-      resultAi.push('OCR Dokumen Browser (Tesseract.js)');
-    }
-    if (features.includes('speech')) {
-      resultAi.push('Web Speech Voice Input');
+    // 6. Payment & Transaction
+    if (payment === 'qris') {
+      resultStack.push('Midtrans Payment Gateway / QRIS');
+      serverCost += ' + Biaya Transaksi Gateway (~0.7% - 2% per transaksi berhasil)';
+      basePrice += 2000000;
+    } else if (payment === 'stripe') {
+      resultStack.push('Stripe Payments SDK');
+      serverCost += ' + Biaya Transaksi Stripe (~2.9% + Rp 5.000 per transaksi kartu kredit)';
+      basePrice += 3500000;
     }
 
-    if (resultAi.length === 0) {
-      resultAi = ['Pencarian semantik', 'Deteksi Anomali Data'];
+    // 7. Security features
+    let extraFeatures = [];
+    if (featureAuth) {
+      resultStack.push('Google OAuth', '2FA Authentication');
+      extraFeatures.push('Keamanan Akun (Google Auth & 2FA)');
     }
+    if (featureWaf) {
+      resultStack.push('Cloudflare WAF / Anti-DDoS');
+      extraFeatures.push('Cloudflare DDoS Protection & WAF');
+    }
+    if (featureBackup) {
+      resultStack.push('Daily Backup Cron');
+      extraFeatures.push('Cadangan Data Otomatis Harian (Daily Backup)');
+    }
+    if (featureAnalytics) {
+      resultStack.push('Google Analytics Integration');
+      extraFeatures.push('Google Analytics & Monitoring SEO');
+    }
+
+    // Format Price
+    const formattedPrice = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0
+    }).format(basePrice);
 
     const outputBox = document.getElementById('specOutputBox');
     outputBox.innerHTML = `
-      <div class="spec-result-card">
-        <div class="spec-header">
-          <span class="spec-kicker">Rekomendasi Cetak Biru Spesifikasi</span>
-          <h3>Estimasi Investasi: <span class="spec-price">${estBudget}</span></h3>
-          <p class="spec-duration"><i class="ph ph-clock"></i> Estimasi Pengerjaan: <b>${estDuration}</b></p>
+      <div class="spec-result-card" style="margin-top: 24px; border: 1px solid var(--sw-accent, #22D3EE); background: linear-gradient(150deg, #1A1E36, #0D0F1E); padding: 24px; border-radius: 12px;">
+        <div class="spec-header" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 16px;">
+          <span class="spec-kicker" style="font-size: 11px; font-weight:700; color:#22D3EE; text-transform:uppercase;">Cetak Biru Rekomendasi Spesifikasi Anda</span>
+          <h3 style="font-size: 24px; margin: 8px 0 4px; color: #fff;">Estimasi Investasi: <span class="spec-price" style="color:#34d399; font-weight:700;">${formattedPrice}</span></h3>
+          <p class="spec-duration" style="font-size: 13px; color:#8B96B3; display:flex; align-items:center; gap:6px; margin:0;">
+            <i class="ph ph-clock"></i> Estimasi Durasi Pengerjaan: <b style="color:#fff;">${estDuration}</b>
+          </p>
         </div>
-        <div class="spec-details-grid">
+
+        <div class="spec-details-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 20px;">
           <div>
-            <h5><i class="ph ph-cpu"></i> Rekomendasi Stack</h5>
-            <ul class="chips">${resultStack.map(s => `<li>${s}</li>`).join('')}</ul>
+            <h5 style="color:#22D3EE; font-size:13px; margin:0 0 8px; display:flex; align-items:center; gap:6px;"><i class="ph ph-cpu"></i> Rekomendasi Stack &amp; Tools</h5>
+            <ul class="chips" style="display:flex; flex-wrap:wrap; gap:6px; padding:0; list-style:none;">
+              ${resultStack.map(s => `<li style="font-size: 11px; background:#0B0E1C; border:1px solid rgba(255,255,255,0.08); padding:4px 8px; border-radius:6px; color:#cfd3e5;">${s}</li>`).join('')}
+            </ul>
           </div>
           <div>
-            <h5><i class="ph ph-brain"></i> Fitur AI Tepat Guna</h5>
-            <ul class="chips">${resultAi.map(a => `<li>${a}</li>`).join('')}</ul>
+            <h5 style="color:#22D3EE; font-size:13px; margin:0 0 8px; display:flex; align-items:center; gap:6px;"><i class="ph ph-shield-check"></i> Hosting &amp; Cloud Plan</h5>
+            <div style="font-size:13px; color:#e9e9ed;">
+              <div style="font-weight:600; color:#fff; margin-bottom:4px;">${hostingDetails}</div>
+              <div style="color:#8B96B3; font-size:12px;">Estimasi Biaya Server:</div>
+              <div style="color:#fbbf24; font-weight:600;">${serverCost}</div>
+            </div>
           </div>
         </div>
-        <div class="spec-arch-note">
-          <h5><i class="ph ph-shield-check"></i> Arsitektur & Keamanan</h5>
-          <p>${architectureNote}</p>
+
+        ${resultAi.length > 0 && resultAi[0] !== 'Tanpa Modul AI' ? `
+        <div style="margin-bottom: 16px;">
+          <h5 style="color:#22D3EE; font-size:13px; margin:0 0 8px; display:flex; align-items:center; gap:6px;"><i class="ph ph-brain"></i> Modul Kecerdasan Buatan (AI)</h5>
+          <ul class="chips" style="display:flex; flex-wrap:wrap; gap:6px; padding:0; list-style:none;">
+            ${resultAi.map(a => `<li style="font-size: 11px; background:rgba(34, 211, 238, 0.1); border:1px solid rgba(34, 211, 238, 0.3); padding:4px 8px; border-radius:6px; color:#22D3EE;">${a}</li>`).join('')}
+          </ul>
         </div>
+        ` : ''}
+
+        ${extraFeatures.length > 0 ? `
+        <div style="margin-bottom: 16px;">
+          <h5 style="color:#22D3EE; font-size:13px; margin:0 0 8px; display:flex; align-items:center; gap:6px;"><i class="ph ph-check-square"></i> Fitur Tambahan Terintegrasi</h5>
+          <ul style="padding-left:16px; margin:0; font-size:12.5px; color:#cfd3e5; display:grid; grid-template-columns:1fr 1fr; gap:4px;">
+            ${extraFeatures.map(f => `<li>${f}</li>`).join('')}
+          </ul>
+        </div>
+        ` : ''}
+
+        <div class="spec-arch-note" style="background: rgba(10, 15, 30, 0.5); padding: 12px; border-radius: 8px; border-left: 3px solid #22D3EE; margin-bottom: 20px;">
+          <h5 style="font-size: 11px; color: #8B96B3; margin: 0 0 4px; text-transform:uppercase;">Catatan Arsitektur Sistem &amp; Keamanan</h5>
+          <p style="font-size: 12.5px; color: #cfd3e5; margin: 0; line-height:1.4;">${architectureNote}</p>
+        </div>
+
         <div class="spec-cta-row">
-          <button type="button" class="btn-spec-action" onclick="openNewConsultationModal({ type: '${appType.toUpperCase()}', budget: '${estBudget}', stack: '${resultStack.join(', ')}', ai: '${resultAi.join(', ')}', duration: '${estDuration}' })">
+          <button type="button" class="btn-spec-action" onclick="openNewConsultationModal({ type: '${appType.toUpperCase()}', budget: '${formattedPrice}', stack: '${resultStack.filter(s => !s.includes('Cloudflare') && !s.includes('Vercel')).slice(0, 4).join(', ')}', ai: '${resultAi.join(', ')}', duration: '${estDuration}' })" style="width:100%; display:flex; align-items:center; justify-content:center; gap:8px;">
             <i class="ph ph-rocket-launch"></i> Gunakan Spesifikasi Ini untuk Diskusi Proyek
           </button>
         </div>
@@ -707,6 +821,270 @@
       setTimeout(() => toast.remove(), 400);
     }, 4000);
   };
+
+  function ensureModalsExist() {
+    if (document.getElementById('authModal')) return; // Already present (e.g. index.html)
+
+    const container = document.createElement('div');
+    container.id = 'dynamicModalsContainer';
+    container.innerHTML = `
+      <!-- MODAL: AUTHENTICATION -->
+      <div class="platform-modal" id="authModal">
+        <div class="platform-modal-content">
+          <div class="platform-modal-header">
+            <h3><i class="ph ph-user-lock"></i> Platform Akun Klien</h3>
+            <button class="platform-modal-close" onclick="closeAuthModal()">&times;</button>
+          </div>
+          <div class="platform-modal-body">
+            <div class="auth-tabs">
+              <button type="button" class="auth-tab active" id="authTabLogin" onclick="openAuthModal('login')">Masuk</button>
+              <button type="button" class="auth-tab" id="authTabRegister" onclick="openAuthModal('register')">Daftar Akun Baru</button>
+              <button type="button" class="auth-tab" id="authTabVerify" onclick="openAuthModal('verify')">Verifikasi OTP</button>
+            </div>
+            <div id="authAlert" style="display:none"></div>
+
+            <!-- LOGIN FORM -->
+            <form id="authFormLogin" onsubmit="handleAuthLogin(event)">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" class="form-control" placeholder="nama@perusahaan.com" required>
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+              </div>
+              <button type="submit" class="btn-platform-primary"><i class="ph ph-sign-in"></i> Masuk Sekarang</button>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form id="authFormRegister" onsubmit="handleAuthRegister(event)" style="display:none">
+              <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="regName" class="form-control" placeholder="Nama Anda" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" id="regEmail" class="form-control" placeholder="nama@email.com" required>
+                </div>
+                <div class="form-group">
+                  <label>No. WhatsApp</label>
+                  <input type="tel" id="regPhone" class="form-control" placeholder="08123456789">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="regPassword" class="form-control" placeholder="Minimal 6 karakter" minlength="6" required>
+              </div>
+              <button type="submit" class="btn-platform-primary"><i class="ph ph-user-plus"></i> Daftar Akun Klien</button>
+            </form>
+
+            <!-- VERIFY OTP FORM -->
+            <form id="authFormVerify" onsubmit="handleAuthVerifyOtp(event)" style="display:none">
+              <div style="font-size:13px; color:#9397ab; margin-bottom:14px;">
+                Masukkan 6 digit kode OTP yang dikirimkan ke <b id="verifyEmailLabel" style="color:#22D3EE;">email Anda</b>:
+              </div>
+              <div class="form-group">
+                <label>Kode OTP 6 Digit</label>
+                <input type="text" id="verifyOtpCode" class="form-control" placeholder="685913" maxlength="6" style="letter-spacing: 0.3em; font-size: 18px; font-weight: 700; text-align: center;" required>
+              </div>
+              <button type="submit" class="btn-platform-primary"><i class="ph ph-check-circle"></i> Verifikasi Kode OTP</button>
+              <div style="text-align:center; margin-top:14px;">
+                <button type="button" class="btn-hub-sm" style="background:transparent; border:0; color:#8B96B3; text-decoration:underline; cursor:pointer;" onclick="handleResendOtp()">
+                  <i class="ph ph-arrows-counter-clockwise"></i> Kirim Ulang Kode OTP
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: USER PROFILE & HISTORY -->
+      <div class="platform-modal" id="profileModal">
+        <div class="platform-modal-content" style="width: min(680px, 94vw);">
+          <div class="platform-modal-header">
+            <h3><i class="ph ph-user-circle"></i> Dashboard Klien &amp; Profil</h3>
+            <button class="platform-modal-close" onclick="closeProfileModal()">&times;</button>
+          </div>
+          <div class="platform-modal-body">
+            <form onsubmit="handleUpdateProfile(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nama Lengkap</label>
+                  <input type="text" id="profName" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" id="profEmail" class="form-control" disabled readonly>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>No. WhatsApp</label>
+                  <input type="tel" id="profPhone" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Perusahaan / Usaha</label>
+                  <input type="text" id="profCompany" class="form-control">
+                </div>
+              </div>
+              <div style="display:flex; gap:10px; justify-content:space-between; margin-bottom:20px;">
+                <button type="submit" class="btn-hub-sm" style="background:#22D3EE; color:#06121F; padding:8px 16px;"><i class="ph ph-floppy-disk"></i> Simpan Profil</button>
+                <button type="button" class="btn-hub-sm" style="background:rgba(239,68,68,0.2); color:#f87171;" onclick="handleAuthLogout()"><i class="ph ph-sign-out"></i> Keluar</button>
+              </div>
+            </form>
+
+            <div class="profile-section-title"><i class="ph ph-chat-circle-dots"></i> Riwayat Diskusi Proyek</div>
+            <div id="userConsultationsList"></div>
+
+            <div class="profile-section-title"><i class="ph ph-calendar"></i> Jadwal Pertemuan Dipesan</div>
+            <div id="userAppointmentsList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: FITUR DISKUSI KEBUTUHAN -->
+      <div class="platform-modal" id="consultationModal">
+        <div class="platform-modal-content">
+          <div class="platform-modal-header">
+            <h3><i class="ph ph-paper-plane-tilt"></i> Ajukan Diskusi Kebutuhan Proyek</h3>
+            <button class="platform-modal-close" onclick="closeConsultationModal()">&times;</button>
+          </div>
+          <div class="platform-modal-body">
+            <form onsubmit="handleConsultationSubmit(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nama Lengkap</label>
+                  <input type="text" id="consultName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" id="consultEmail" class="form-control" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>No. WhatsApp</label>
+                  <input type="tel" id="consultPhone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Jenis Proyek</label>
+                  <select id="consultProjectType" class="form-control">
+                    <option value="Website & Landing Page">Website &amp; Landing Page</option>
+                    <option value="WebApp & SaaS" selected>WebApp &amp; SaaS Custom</option>
+                    <option value="Fitur AI Chatbot / RAG">Fitur AI Chatbot / RAG</option>
+                    <option value="PWA Mobile & POS">PWA Mobile &amp; POS</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Estimasi Anggaran</label>
+                  <select id="consultBudget" class="form-control">
+                    <option value="3.5 - 7 Juta">3.5 – 7 Juta</option>
+                    <option value="10 - 25 Juta" selected>10 – 25 Juta</option>
+                    <option value="25 - 50 Juta">25 – 50 Juta</option>
+                    <option value="> 50 Juta">> 50 Juta</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Target Peluncuran</label>
+                  <input type="text" id="consultTimeline" class="form-control" placeholder="misal: 1 Bulan">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Deskripsi Kebutuhan &amp; Spesifikasi</label>
+                <textarea id="consultDesc" class="form-control" placeholder="Jelaskan gambaran aplikasi yang ingin Anda bangun..." required></textarea>
+              </div>
+              <button type="submit" class="btn-platform-primary"><i class="ph ph-paper-plane-tilt"></i> Kirimkan Pengajuan Diskusi</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: DISCUSSION THREAD CHAT -->
+      <div class="platform-modal" id="discussionThreadModal">
+        <div class="platform-modal-content" style="width: min(640px, 94vw);">
+          <div class="platform-modal-header">
+            <h3 id="threadTitle"><i class="ph ph-chat-circle-dots"></i> Diskusi Chat Proyek</h3>
+            <button class="platform-modal-close" onclick="closeDiscussionThreadModal()">&times;</button>
+          </div>
+          <div class="platform-modal-body" style="padding: 16px;">
+            <div class="chat-container">
+              <div class="chat-body" id="threadChatBody"></div>
+              <form class="chat-form" onsubmit="handleSendChatMessage(event)">
+                <input type="text" id="threadInputMessage" class="form-control" placeholder="Tuliskan pesan atau pertanyaan..." required autocomplete="off">
+                <button type="submit" class="btn-platform-primary" style="width: auto; padding: 0 18px;"><i class="ph ph-paper-plane-right"></i> Kirim</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: FITUR BOOK JADWAL PERTEMUAN -->
+      <div class="platform-modal" id="bookingModal">
+        <div class="platform-modal-content">
+          <div class="platform-modal-header">
+            <h3><i class="ph ph-calendar-plus"></i> Book Jadwal Pertemuan / Konsultasi</h3>
+            <button class="platform-modal-close" onclick="closeBookingModal()">&times;</button>
+          </div>
+          <div class="platform-modal-body">
+            <form onsubmit="handleBookingSubmit(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nama Anda</label>
+                  <input type="text" id="bookName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" id="bookEmail" class="form-control" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>No. WhatsApp</label>
+                  <input type="tel" id="bookPhone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Media Pertemuan</label>
+                  <select id="bookType" class="form-control">
+                    <option value="google_meet">Google Meet (Online)</option>
+                    <option value="whatsapp_call">WhatsApp Call / Video</option>
+                    <option value="offline">Tatap Muka (Offline)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Pilih Tanggal</label>
+                  <input type="date" id="bookDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Pilih Jam (WIB)</label>
+                  <select id="bookTime" class="form-control">
+                    <option value="10:00">10:00 WIB</option>
+                    <option value="13:00">13:00 WIB</option>
+                    <option value="15:30">15:30 WIB</option>
+                    <option value="19:30">19:30 WIB</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Topik Diskusi / Judul Pertemuan</label>
+                <input type="text" id="bookTopic" class="form-control" placeholder="misal: Konsultasi Arsitektur WebApp Toko Online" required>
+              </div>
+              <div class="form-group">
+                <label>Catatan Tambahan (Opsional)</label>
+                <textarea id="bookNotes" class="form-control" placeholder="Ada hal khusus yang ingin disiapkan sebelum meeting?"></textarea>
+              </div>
+              <button type="submit" class="btn-platform-primary"><i class="ph ph-calendar-check"></i> Konfirmasi Booking Pertemuan</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(container);
+  }
 
   // DOM Loaded listener
   document.addEventListener('DOMContentLoaded', initSDK);
