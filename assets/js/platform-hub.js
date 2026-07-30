@@ -392,9 +392,75 @@
     }
 
     if (presetSpec) {
-      document.getElementById('consultProjectType').value = presetSpec.type || 'WebApp & SaaS';
+      // Map app type to consultation project type select
+      const typeMap = {
+        'WEBSITE': 'Website & Landing Page',
+        'WEBAPP': 'WebApp & SaaS',
+        'SAAS': 'WebApp & SaaS',
+        'MOBILE': 'PWA Mobile & POS'
+      };
+      const projectType = typeMap[presetSpec.type] || 'WebApp & SaaS';
+      document.getElementById('consultProjectType').value = projectType;
       document.getElementById('consultBudget').value = presetSpec.budget || '10-25 Juta';
-      document.getElementById('consultDesc').value = `[Rekomendasi Spesifikasi]\nTech Stack: ${presetSpec.stack || '-'}\nFitur AI: ${presetSpec.ai || '-'}\nEstimasi Waktu: ${presetSpec.duration || '-'}`;
+      document.getElementById('consultTimeline').value = presetSpec.duration || '';
+
+      // Build comprehensive specification summary
+      let desc = '══════════════════════════════════════\n';
+      desc += '📋 CETAK BIRU SPESIFIKASI KALKULATOR\n';
+      desc += '══════════════════════════════════════\n\n';
+
+      desc += `🏷️ Jenis Aplikasi: ${presetSpec.appTypeLabel || presetSpec.type}\n`;
+      desc += `📊 Tingkat Usaha: ${presetSpec.scaleLabel || '-'}\n`;
+      desc += `⏱️ Estimasi Durasi: ${presetSpec.duration || '-'}\n`;
+      desc += `💰 Total Estimasi Setup: ${presetSpec.totalSetup || '-'}\n`;
+      desc += `📆 Operasional Bulanan: ${presetSpec.totalMonthly || 'Rp 0'}\n\n`;
+
+      // Cost breakdown table
+      if (presetSpec.costItems && presetSpec.costItems.length > 0) {
+        desc += '──────────────────────────────────────\n';
+        desc += '💳 RINCIAN BIAYA PER MODUL:\n';
+        desc += '──────────────────────────────────────\n';
+        presetSpec.costItems.forEach((item, i) => {
+          desc += `\n${i + 1}. ${item.category}\n`;
+          desc += `   Spesifikasi: ${item.spec}\n`;
+          desc += `   Setup: ${item.setupFormatted}\n`;
+          desc += `   Bulanan: ${item.monthly}\n`;
+        });
+        desc += '\n';
+      }
+
+      // Tech stack
+      if (presetSpec.stack && presetSpec.stack.length > 0) {
+        desc += '──────────────────────────────────────\n';
+        desc += '🛠️ REKOMENDASI TECH STACK:\n';
+        desc += '──────────────────────────────────────\n';
+        presetSpec.stack.forEach(s => { desc += `• ${s}\n`; });
+        desc += '\n';
+      }
+
+      // AI modules
+      if (presetSpec.ai && presetSpec.ai.length > 0 && presetSpec.ai[0] !== 'Tanpa Modul AI') {
+        desc += '🤖 MODUL AI:\n';
+        presetSpec.ai.forEach(a => { desc += `• ${a}\n`; });
+        desc += '\n';
+      }
+
+      // Hosting & Infrastructure
+      if (presetSpec.hosting) {
+        desc += `☁️ Infrastruktur: ${presetSpec.hosting}\n`;
+        desc += `   Backup Harian: ${presetSpec.backupActive ? 'Aktif ✅' : 'Non-aktif ❌'}\n`;
+        desc += `   WAF Cloudflare: ${presetSpec.wafActive ? 'Aktif ✅' : 'Non-aktif ❌'}\n\n`;
+      }
+
+      // Architecture note
+      if (presetSpec.architectureNote) {
+        desc += '──────────────────────────────────────\n';
+        desc += '📐 CATATAN ARSITEKTUR:\n';
+        desc += '──────────────────────────────────────\n';
+        desc += presetSpec.architectureNote + '\n';
+      }
+
+      document.getElementById('consultDesc').value = desc;
     }
 
     modal.classList.add('is-open');
@@ -618,94 +684,89 @@
     let totalMonthlyMin = 0;
     let totalMonthlyMax = 0;
 
-    // 1. Calculate Base Price and Tech Stack according to App Type
+    // 1. Base Development Fee mapping based on App Type
     let baseAppPrice = 0;
     let appTypeLabel = '';
     if (appType === 'website') {
       resultStack = ['Astro / Next.js', 'Tailwind CSS', 'Vite'];
-      baseAppPrice = 4000000;
+      baseAppPrice = 1200000;
       appTypeLabel = 'Website / Landing Page';
-      estDuration = '5 – 8 Hari Kerja';
+      estDuration = '3 – 5 Hari Kerja';
       architectureNote = 'Website statik supercepat dengan integrasi SEO tingkat lanjut & loading kurang dari 1 detik.';
     } else if (appType === 'webapp') {
       resultStack = ['React / Next.js', 'Tailwind CSS', 'Node.js API'];
-      baseAppPrice = 14000000;
+      baseAppPrice = 3200000;
       appTypeLabel = 'WebApp Custom / Portal Bisnis';
-      estDuration = '3 – 4 Minggu';
+      estDuration = '2 – 3 Minggu';
       architectureNote = 'Web Application kustom dengan dashboard admin interaktif, sistem hak akses pengguna, dan rekap data.';
     } else if (appType === 'saas') {
       resultStack = ['Next.js App Router', 'Tailwind CSS', 'Node.js Serverless'];
-      baseAppPrice = 28000000;
+      baseAppPrice = 5500000;
       appTypeLabel = 'Platform SaaS Multi-Tenant';
-      estDuration = '5 – 8 Minggu';
+      estDuration = '4 – 5 Minggu';
       architectureNote = 'Platform SaaS Multi-Tenant dengan manajemen langganan (billing), pendaftaran otomatis tenancies, dan proteksi API.';
     } else if (appType === 'mobile') {
       resultStack = ['React Native / PWA', 'Tailwind CSS', 'FastAPI / Express'];
-      baseAppPrice = 18000000;
+      baseAppPrice = 4200000;
       appTypeLabel = 'PWA Mobile / Kasir POS';
-      estDuration = '4 – 5 Minggu';
+      estDuration = '3 – 4 Minggu';
       architectureNote = 'Aplikasi PWA/Kasir POS responsif yang dapat diinstal langsung di Android/iOS dengan dukungan mode offline-first.';
     }
 
-    costItems.push({
-      category: 'Base Development',
-      spec: appTypeLabel,
-      setup: baseAppPrice,
-      monthly: 'Rp 0'
-    });
-    totalSetup += baseAppPrice;
-
-    // 2. Adjust for Scale & Trafik
+    // 2. Adjust for Scale / Tingkat Usaha Modifier
     let scaleLabel = '';
     let scaleModifier = 0;
     if (scale === 'umkm') {
-      scaleLabel = 'UMKM / Startup (Simplified Complexities)';
-      scaleModifier = -0.15; // 15% discount
-      architectureNote += ' Dioptimalkan untuk efisiensi biaya awal.';
+      scaleLabel = 'UMKM / Rintisan (Discounted)';
+      scaleModifier = -0.20; // 20% discount
+      architectureNote += ' Dioptimalkan untuk efisiensi biaya awal dan proses pengerjaan kilat.';
     } else if (scale === 'growth') {
-      scaleLabel = 'Bisnis Berkembang (Standard Traffic)';
+      scaleLabel = 'SME / Bisnis Berkembang (Standard)';
       scaleModifier = 0;
     } else if (scale === 'enterprise') {
-      scaleLabel = 'Enterprise (High Traffic / HA)';
-      scaleModifier = 0.8; // 80% premium
-      estDuration = estDuration.replace(/([0-9]+)/g, (match) => Math.round(parseInt(match) * 1.5));
+      scaleLabel = 'Enterprise / Korporasi (High Availability)';
+      scaleModifier = 0.50; // 50% premium
+      if (appType === 'website') estDuration = '10 – 14 Hari Kerja';
+      else if (appType === 'webapp') estDuration = '4 – 6 Minggu';
+      else if (appType === 'saas') estDuration = '6 – 8 Minggu';
+      else if (appType === 'mobile') estDuration = '5 – 6 Minggu';
       architectureNote += ' Dilengkapi infrastruktur kluster dengan skalabilitas horizontal otomatis.';
     }
 
-    if (scaleModifier !== 0) {
-      const modifierCost = Math.round(baseAppPrice * scaleModifier);
-      costItems.push({
-        category: 'Skala & Kompleksitas',
-        spec: scaleLabel,
-        setup: modifierCost,
-        monthly: 'Rp 0'
-      });
-      totalSetup += modifierCost;
-    }
+    const modifierCost = Math.round(baseAppPrice * scaleModifier);
+    const finalBasePrice = baseAppPrice + modifierCost;
+    
+    costItems.push({
+      category: 'Base Development',
+      spec: `${appTypeLabel} (${scaleLabel})`,
+      setup: finalBasePrice,
+      monthly: 'Rp 0'
+    });
+    totalSetup += finalBasePrice;
 
-    // 3. Infrastructure & Cloud Hosting Plan (Free vs Premium)
+    // 3. Infrastructure & Cloud Hosting
     let hostingDetails = '';
     let cloudSetupCost = 0;
     let cloudMonthlyLabel = 'Rp 0';
     if (cloud === 'free') {
-      resultStack.push('Cloudflare Pages (Gratis)', 'Vercel Serverless (Gratis)');
+      resultStack.push('Cloudflare Pages / Vercel');
       cloudMonthlyLabel = 'Rp 0';
       hostingDetails = 'Serverless Hosting Gratis';
       cloudSetupCost = 0;
     } else if (cloud === 'standard') {
-      resultStack.push('Dedicated VPS (DigitalOcean/Linode)');
+      resultStack.push('Dedicated VPS Server (DigitalOcean / Linode)');
       cloudMonthlyLabel = 'Rp 150rb – 450rb';
       totalMonthlyMin += 150000;
       totalMonthlyMax += 450000;
       hostingDetails = 'VPS Dedicated Kinerja Tinggi';
-      cloudSetupCost = 1500000;
+      cloudSetupCost = 500000;
     } else if (cloud === 'premium') {
-      resultStack.push('AWS EC2 / GCP Engine', 'Auto-scaling Cluster', 'Multi-zone RDS');
+      resultStack.push('Enterprise Cloud Cluster (AWS EC2 / GCP Engine)');
       cloudMonthlyLabel = 'Rp 1.5jt – 4.5jt';
       totalMonthlyMin += 1500000;
       totalMonthlyMax += 4500000;
       hostingDetails = 'Premium AWS/GCP Cluster';
-      cloudSetupCost = 4500000;
+      cloudSetupCost = 1200000;
     }
 
     costItems.push({
@@ -716,29 +777,27 @@
     });
     totalSetup += cloudSetupCost;
 
-    // 4. Backend & Database
+    // 4. Database & Storage Scale
     let dbLabel = '';
     let dbSetupCost = 0;
     if (backend === 'insforge') {
       resultStack.push('InsForge BaaS Client SDK', 'PostgreSQL (InsForge Cloud)');
       architectureNote += ' Backend terintegrasi penuh menggunakan InsForge (Auth, DB RLS, Storage).';
-      dbLabel = 'InsForge BaaS SDK (Realtime DB & Storage)';
-      dbSetupCost = 0; // Integrated free setup
-    } else if (backend === 'supabase') {
-      resultStack.push('Supabase BaaS Client', 'PostgreSQL Database');
-      architectureNote += ' Menggunakan Supabase client BaaS open-source.';
-      dbLabel = 'Supabase Cloud Client + Auth Setup';
+      dbLabel = 'InsForge Integrated BaaS';
+      dbSetupCost = 0;
+    } else if (backend === 'standard') {
+      resultStack.push('Dedicated PostgreSQL / MySQL Standard');
+      dbLabel = 'Dedicated Managed Database';
+      dbSetupCost = 400000;
+    } else if (backend === 'cluster') {
+      resultStack.push('HA Database Cluster (Multi-Region Replicas)');
+      dbLabel = 'Enterprise HA Database Cluster';
       dbSetupCost = 1000000;
-    } else if (backend === 'postgres') {
-      resultStack.push('Dedicated PostgreSQL', 'Docker Database Container');
-      architectureNote += ' Database PostgreSQL murni yang di-host mandiri pada VPS Anda.';
-      dbLabel = 'Dedicated PostgreSQL (Self-Hosted Manual)';
-      dbSetupCost = 2000000;
     }
 
-    if (dbSetupCost > 0) {
+    if (dbSetupCost > 0 || backend === 'insforge') {
       costItems.push({
-        category: 'Backend & Database',
+        category: 'Database & Storage',
         spec: dbLabel,
         setup: dbSetupCost,
         monthly: 'Rp 0'
@@ -746,22 +805,30 @@
       totalSetup += dbSetupCost;
     }
 
-    // 5. AI Module
+    // 5. AI Modules
     let aiLabel = 'Tanpa AI';
     let aiSetupCost = 0;
     let aiMonthlyLabel = 'Rp 0';
-    if (ai === 'free_ai') {
-      resultStack.push('Gemini AI API (Free Tier)', 'Web Speech API (Browser)', 'Tesseract.js OCR (Client-side)');
+    if (ai === 'basic') {
+      resultStack.push('Gemini AI API (Free Tier)', 'Web Speech API (Speech to Text)', 'Tesseract.js OCR (Client-side)');
       resultAi = ['Gemini AI Chatbot (Free)', 'Web Speech Voice Input', 'Client OCR Scanning'];
-      aiLabel = 'AI Hemat (Gemini Free + Speech + OCR Client)';
-      aiSetupCost = 2500000;
+      aiLabel = 'Basic AI (Gemini Free + Speech + OCR Client)';
+      aiSetupCost = 500000;
       aiMonthlyLabel = 'Rp 0';
-    } else if (ai === 'premium_ai') {
-      resultStack.push('OpenAI GPT-4o API', 'Claude 3.5 Sonnet API', 'Vector Database PGVector');
-      resultAi = ['Premium AI Chatbot CS (Custom RAG)', 'Pencarian Semantik Vector', 'Analisis Prediktif Data'];
-      aiLabel = 'AI Premium (GPT-4o/Claude + Vector DB RAG)';
-      aiSetupCost = 8000000;
+    } else if (ai === 'advanced') {
+      resultStack.push('Gemini Flash/Pro API Integration', 'Prompt Optimization');
+      resultAi = ['Gemini Assistant API', 'Custom Prompt Engineering', 'Content Summarizer'];
+      aiLabel = 'Advanced AI API (Gemini Flash/Pro)';
+      aiSetupCost = 1200000;
       aiMonthlyLabel = 'Sesuai Pemakaian API';
+    } else if (ai === 'enterprise_rag') {
+      resultStack.push('OpenAI GPT-4o / Claude 3.5 API', 'pgvector DB Vector Search', 'Knowledge Ingestion Pipeline');
+      resultAi = ['Custom RAG Knowledge-base Bot', 'Semantic Search Engine', 'AI Forecasting Dashboard'];
+      aiLabel = 'Enterprise LLM & RAG Vector Search';
+      aiSetupCost = 2500000;
+      aiMonthlyLabel = 'Token LLM + Rp 200rb/bln';
+      totalMonthlyMin += 200000;
+      totalMonthlyMax += 200000;
     } else {
       resultAi = ['Tanpa Modul AI'];
     }
@@ -776,25 +843,30 @@
       totalSetup += aiSetupCost;
     }
 
-    // 6. Payment & Transaction
+    // 6. Payment & Transaction Gateway
     let paymentLabel = 'Tanpa Integrasi Pembayaran';
     let paymentSetupCost = 0;
     let paymentMonthlyLabel = 'Rp 0';
-    if (payment === 'qris') {
-      resultStack.push('Midtrans Payment Gateway / QRIS');
-      paymentLabel = 'Midtrans QRIS & Virtual Account';
-      paymentSetupCost = 2000000;
+    if (payment === 'single') {
+      resultStack.push('QRIS Manual / WhatsApp Billing Checkout');
+      paymentLabel = 'Single-Channel Checkouts (Manual)';
+      paymentSetupCost = 200000;
+      paymentMonthlyLabel = 'Rp 0';
+    } else if (payment === 'full') {
+      resultStack.push('Midtrans / Xendit Payment Gateway API');
+      paymentLabel = 'Full Payment Gateway (Midtrans/Xendit)';
+      paymentSetupCost = 600000;
       paymentMonthlyLabel = '0.7% - 2% / Transaksi';
-    } else if (payment === 'stripe') {
-      resultStack.push('Stripe Payments SDK');
-      paymentLabel = 'Stripe (Credit Card & Internasional)';
-      paymentSetupCost = 3500000;
+    } else if (payment === 'international') {
+      resultStack.push('Stripe Payments SDK Integration');
+      paymentLabel = 'Cross-Border (Stripe Credit Card)';
+      paymentSetupCost = 1000000;
       paymentMonthlyLabel = '2.9% + Rp 5rb / Transaksi';
     }
 
     if (paymentSetupCost > 0) {
       costItems.push({
-        category: 'Integrasi FinTech',
+        category: 'Integrasi Fintech',
         spec: paymentLabel,
         setup: paymentSetupCost,
         monthly: paymentMonthlyLabel
@@ -808,22 +880,22 @@
     if (featureAuth) {
       resultStack.push('Google OAuth', '2FA Authentication');
       addonSpecs.push('Google Auth & 2FA');
-      addonSetupCost += 1000000;
+      addonSetupCost += 250000;
     }
     if (featureWaf) {
-      resultStack.push('Cloudflare WAF / Anti-DDoS');
+      resultStack.push('Cloudflare WAF / DDoS Protection');
       addonSpecs.push('WAF & Anti-DDoS');
-      addonSetupCost += 1000000;
+      addonSetupCost += 250000;
     }
     if (featureBackup) {
-      resultStack.push('Daily Backup Cron');
+      resultStack.push('Encrypted Daily Backup Cron');
       addonSpecs.push('Daily Data Backup');
-      addonSetupCost += 800000;
+      addonSetupCost += 200000;
     }
     if (featureAnalytics) {
-      resultStack.push('Google Analytics Integration');
+      resultStack.push('Google Analytics & SEO optimization');
       addonSpecs.push('Google Analytics & SEO');
-      addonSetupCost += 800000;
+      addonSetupCost += 200000;
     }
 
     if (addonSetupCost > 0) {
@@ -834,6 +906,11 @@
         monthly: 'Rp 0'
       });
       totalSetup += addonSetupCost;
+    }
+
+    // Ensure absolute cap of Rp 15.000.000 (Solo Dev package limit)
+    if (totalSetup > 15000000) {
+      totalSetup = 15000000;
     }
 
     // Format totals
@@ -849,13 +926,34 @@
     if (totalMonthlyMin > 0) {
       formattedMonthly = `${formatter.format(totalMonthlyMin)} – ${formatter.format(totalMonthlyMax)} / Bulan`;
     }
-    if (ai === 'premium_ai') {
+    if (ai === 'advanced' || ai === 'enterprise_rag') {
       formattedMonthly += ' + Token AI';
     }
 
+    // Store complete spec for the CTA button to pass to consultation modal
+    window.__lastCalcSpec = {
+      type: appType.toUpperCase(),
+      appTypeLabel: appTypeLabel,
+      scaleLabel: scaleLabel,
+      budget: formattedSetup,
+      totalSetup: formattedSetup,
+      totalMonthly: formattedMonthly,
+      duration: estDuration,
+      costItems: costItems.map(item => ({
+        ...item,
+        setupFormatted: formatter.format(item.setup)
+      })),
+      stack: resultStack,
+      ai: resultAi,
+      hosting: hostingDetails,
+      backupActive: featureBackup,
+      wafActive: featureWaf,
+      architectureNote: architectureNote
+    };
+
     const outputBox = document.getElementById('specOutputBox');
     outputBox.innerHTML = `
-      <div class="spec-result-card" style="margin-top: 24px; border: 1px solid var(--sw-accent, #22D3EE); background: linear-gradient(150deg, #1A1E36, #0D0F1E); padding: 24px; border-radius: 12px; box-sizing: border-box;">
+      <div class="spec-result-card border-beam-card" style="margin-top: 24px; padding: 24px; box-sizing: border-box;">
         <div class="spec-header" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 16px;">
           <span class="spec-kicker" style="font-size: 11px; font-weight:700; color:#22D3EE; text-transform:uppercase;">Cetak Biru Rekomendasi Spesifikasi Anda</span>
           <h3 style="font-size: 24px; margin: 8px 0 4px; color: #fff;">Estimasi Investasi: <span class="spec-price" style="color:#34d399; font-weight:700;">${formattedSetup}</span></h3>
@@ -916,7 +1014,7 @@
         </div>
 
         <div class="spec-cta-row">
-          <button type="button" class="btn-spec-action" onclick="openNewConsultationModal({ type: '${appType.toUpperCase()}', budget: '${formattedSetup}', stack: '${resultStack.filter(s => !s.includes('Cloudflare') && !s.includes('Vercel')).slice(0, 4).join(', ')}', ai: '${resultAi.join(', ')}', duration: '${estDuration}' })" style="width:100%; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <button type="button" class="btn-spec-action" onclick="openNewConsultationModal(window.__lastCalcSpec)" style="width:100%; display:flex; align-items:center; justify-content:center; gap:8px;">
             <i class="ph ph-rocket-launch"></i> Gunakan Spesifikasi Ini untuk Diskusi Proyek
           </button>
         </div>
