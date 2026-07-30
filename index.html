@@ -1129,6 +1129,7 @@
         <div class="auth-tabs">
           <button type="button" class="auth-tab active" id="authTabLogin" onclick="openAuthModal('login')">Masuk</button>
           <button type="button" class="auth-tab" id="authTabRegister" onclick="openAuthModal('register')">Daftar Akun Baru</button>
+          <button type="button" class="auth-tab" id="authTabVerify" onclick="openAuthModal('verify')">Verifikasi OTP</button>
         </div>
         <div id="authAlert" style="display:none"></div>
 
@@ -1166,6 +1167,23 @@
             <input type="password" id="regPassword" class="form-control" placeholder="Minimal 6 karakter" minlength="6" required>
           </div>
           <button type="submit" class="btn-platform-primary"><i class="ph ph-user-plus"></i> Daftar Akun Klien</button>
+        </form>
+
+        <!-- VERIFY OTP FORM -->
+        <form id="authFormVerify" onsubmit="handleAuthVerifyOtp(event)" style="display:none">
+          <div style="font-size:13px; color:#9397ab; margin-bottom:14px;">
+            Masukkan 6 digit kode OTP yang dikirimkan ke <b id="verifyEmailLabel" style="color:#22D3EE;">email Anda</b>:
+          </div>
+          <div class="form-group">
+            <label>Kode OTP 6 Digit</label>
+            <input type="text" id="verifyOtpCode" class="form-control" placeholder="685913" maxlength="6" style="letter-spacing: 0.3em; font-size: 18px; font-weight: 700; text-align: center;" required>
+          </div>
+          <button type="submit" class="btn-platform-primary"><i class="ph ph-check-circle"></i> Verifikasi Kode OTP</button>
+          <div style="text-align:center; margin-top:14px;">
+            <button type="button" class="btn-hub-sm" style="background:transparent; border:0; color:#8B96B3; text-decoration:underline; cursor:pointer;" onclick="handleResendOtp()">
+              <i class="ph ph-arrows-counter-clockwise"></i> Kirim Ulang Kode OTP
+            </button>
+          </div>
         </form>
       </div>
     </div>

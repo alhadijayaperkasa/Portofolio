@@ -4,6 +4,7 @@
   "description": "Landing page portofolio jasa pembuatan **Website · WebApp · SaaS · Fitur AI** dengan teknik **scroll-world** (https://github.com/oso95/scroll-world): kamera menembus dunia-dunia bidang usaha yang digerakkan oleh scroll, tanpa potongan antar-scene.",
   "main": "index.js",
   "scripts": {
+    "dev": "npx -y serve . -p 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

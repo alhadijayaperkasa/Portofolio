@@ -89,6 +89,8 @@
     }
   }
 
+  let pendingVerifyEmail = '';
+
   // Auth Modals & Actions
   window.openAuthModal = function (mode = 'login') {
     const modal = document.getElementById('authModal');
@@ -96,11 +98,23 @@
 
     document.getElementById('authTabLogin').classList.toggle('active', mode === 'login');
     document.getElementById('authTabRegister').classList.toggle('active', mode === 'register');
+    document.getElementById('authTabVerify').classList.toggle('active', mode === 'verify');
+
     document.getElementById('authFormLogin').style.display = mode === 'login' ? 'block' : 'none';
     document.getElementById('authFormRegister').style.display = mode === 'register' ? 'block' : 'none';
+    document.getElementById('authFormVerify').style.display = mode === 'verify' ? 'block' : 'none';
     document.getElementById('authAlert').style.display = 'none';
 
+    if (mode === 'verify' && pendingVerifyEmail) {
+      document.getElementById('verifyEmailLabel').textContent = pendingVerifyEmail;
+    }
+
     modal.classList.add('is-open');
+  };
+
+  window.openVerifyEmailModal = function (email) {
+    pendingVerifyEmail = email || '';
+    openAuthModal('verify');
   };
 
   window.closeAuthModal = function () {
@@ -118,7 +132,17 @@
 
     try {
       const { data, error } = await insforge.auth.signInWithPassword({ email, password });
-      if (error) throw error;
+      if (error) {
+        if (error.error === 'EMAIL_NOT_VERIFIED' || (error.message && error.message.toLowerCase().includes('verify'))) {
+          pendingVerifyEmail = email;
+          openAuthModal('verify');
+          alertEl.className = 'auth-alert auth-alert-error';
+          alertEl.textContent = 'Email Anda belum diverifikasi. Silakan masukkan 6 digit kode OTP dari email Anda di bawah.';
+          alertEl.style.display = 'block';
+          return;
+        }
+        throw error;
+      }
 
       currentUser = data.user;
       await fetchProfile();
@@ -149,23 +173,73 @@
       if (data.user) {
         currentUser = data.user;
         // save profile details
-        await insforge.database.from('profiles').insert([{
-          id: data.user.id,
-          email: email,
-          full_name: name,
-          phone: phone,
-          role: 'client'
-        }]);
-        await fetchProfile();
+        try {
+          await insforge.database.from('profiles').insert([{
+            id: data.user.id,
+            email: email,
+            full_name: name,
+            phone: phone,
+            role: 'client'
+          }]);
+        } catch (pe) {}
       }
 
-      updateUserUI();
-      closeAuthModal();
-      showToast('Pendaftaran berhasil! Akun Anda telah aktif.', 'success');
+      pendingVerifyEmail = email;
+      openAuthModal('verify');
+      showToast('Pendaftaran berhasil! Kode OTP 6 digit telah dikirim ke email Anda.', 'success');
     } catch (err) {
       alertEl.className = 'auth-alert auth-alert-error';
       alertEl.textContent = err.message || 'Gagal mendaftar. Silakan coba lagi.';
       alertEl.style.display = 'block';
+    }
+  };
+
+  window.handleAuthVerifyOtp = async function (e) {
+    e.preventDefault();
+    const alertEl = document.getElementById('authAlert');
+    alertEl.style.display = 'none';
+
+    const otp = document.getElementById('verifyOtpCode').value.trim();
+    const email = pendingVerifyEmail || document.getElementById('loginEmail').value.trim();
+
+    if (!otp || otp.length !== 6) {
+      alertEl.className = 'auth-alert auth-alert-error';
+      alertEl.textContent = 'Masukkan 6 digit kode OTP secara lengkap.';
+      alertEl.style.display = 'block';
+      return;
+    }
+
+    try {
+      const { data, error } = await insforge.auth.verifyEmail({ email, otp });
+      if (error) throw error;
+
+      if (data && data.user) {
+        currentUser = data.user;
+        await fetchProfile();
+      }
+      updateUserUI();
+      closeAuthModal();
+      showToast('Email berhasil diverifikasi! Akun Anda kini sudah aktif.', 'success');
+    } catch (err) {
+      alertEl.className = 'auth-alert auth-alert-error';
+      alertEl.textContent = err.message || 'Kode OTP tidak valid atau sudah kedaluwarsa. Silakan periksa kembali.';
+      alertEl.style.display = 'block';
+    }
+  };
+
+  window.handleResendOtp = async function () {
+    const email = pendingVerifyEmail || document.getElementById('loginEmail').value.trim();
+    if (!email) {
+      showToast('Email tidak ditemukan. Silakan masuk terlebih dahulu.', 'error');
+      return;
+    }
+
+    try {
+      const { error } = await insforge.auth.resendVerificationEmail({ email });
+      if (error) throw error;
+      showToast(`Kode OTP baru telah dikirimkan ke ${email}.`, 'info');
+    } catch (err) {
+      showToast('Gagal mengirim ulang OTP: ' + err.message, 'error');
     }
   };
 
