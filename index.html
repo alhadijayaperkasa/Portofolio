@@ -489,6 +489,14 @@
       .row { grid-template-columns: minmax(72px, 96px) minmax(0, 1fr); }
       .row > *:nth-child(3) { grid-column: 2; }
       .band .grid { grid-template-columns: repeat(2, 1fr); justify-content: start; }
+      /* Force bento grid to 2 columns on tablet */
+      .portfolio-bento { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+      .portfolio-card:nth-child(1),
+      .portfolio-card:nth-child(2),
+      .portfolio-card:nth-child(3),
+      .portfolio-card:nth-child(4),
+      .portfolio-card:nth-child(5) { grid-column: span 1 !important; }
+      .portfolio-card:nth-child(6) { grid-column: span 2 !important; }
     }
     @media (max-width: 860px) {
       .doc-rail { display: none; }
@@ -500,6 +508,23 @@
       .cards { flex-direction: column; align-items: stretch; }
       .tile { max-width: 100%; }
       #lanjutan footer { justify-content: flex-start; }
+      /* Force bento grid to single column on mobile */
+      .portfolio-bento {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+      }
+      .portfolio-card {
+        grid-column: span 1 !important;
+        padding: 20px 16px !important;
+      }
+      .portfolio-card:nth-child(1),
+      .portfolio-card:nth-child(2),
+      .portfolio-card:nth-child(3),
+      .portfolio-card:nth-child(4),
+      .portfolio-card:nth-child(5),
+      .portfolio-card:nth-child(6) {
+        grid-column: span 1 !important;
+      }
     }
 
   </style>
