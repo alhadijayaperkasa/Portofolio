@@ -1369,6 +1369,7 @@
     //  VIDEO HERO — hasil pipeline flow/proses.sh ada di assets/vid/.
     //  Set false untuk kembali ke mode poster saja (tanpa video).
     // ============================================================
+    const PAKAI_VIDEO = true;
     const vid = (name) => PAKAI_VIDEO ? { clip: `assets/vid/${name}.mp4`, clipMobile: `assets/vid/${name}-m.mp4` } : {};
     // Poster tiap scene = frame pertama videonya (dibuat otomatis oleh flow/proses.sh).
     // `n` boleh angka atau string ('1b') karena scene 1 dipotong dua beat.
