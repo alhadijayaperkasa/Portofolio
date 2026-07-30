@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Alhadi Cyber Media — Jasa Website, WebApp, SaaS & Fitur AI</title>
+  <meta name="description" content="Alhadi Cyber Media — jasa pembuatan website, webapp, dan SaaS, plus fitur AI seperti chatbot dan analisis data. Integrasi Mapbox, OCR Tesseract.js, dan Web Speech API." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Alhadi Cyber Media — Website, WebApp & SaaS" />
+  <meta property="og:description" content="Ide Anda, jadi aplikasi yang bekerja. Website · WebApp · SaaS · Fitur AI." />
+  <meta property="og:image" content="assets/poster/scene1.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0A0F1E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0F1E'/%3E%3Cpath d='M16 5l9 18h-4.4L16 13.4 11.4 23H7z' fill='%2322D3EE'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <style>
+    /* ====== Tema Alhadi Cyber Media (neon night) — menimpa default @layer sw ====== */
+    :root, .sw-root {
+      --sw-bg: #0A0F1E;
+      --sw-ink: #EAF2FF;
+      --sw-ink-soft: #8B96B3;
+      --sw-accent: #22D3EE;
+      --sw-font-display: 'Sora', 'Segoe UI', system-ui, sans-serif;
+      --sw-font-body: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+    }
+    /* Panel-panel terang bawaan engine dibuat gelap agar serasi dengan malam neon */
+    .sw-nav{background:color-mix(in srgb,#0A0F1E 62%,transparent);border-color:color-mix(in srgb,var(--sw-accent) 28%,transparent);}
+    .sw-nav__item{color:#A9B4CF;} .sw-nav__item:hover{color:#fff;}
+    .sw-nav__item.is-active{color:#06121F;background:var(--sw-accent);font-weight:700;}
+    .sw-topcta{background:var(--sw-accent);color:#06121F;box-shadow:0 6px 22px color-mix(in srgb,var(--sw-accent) 45%,transparent);}
+    .sw-btn--primary{background:var(--sw-accent);color:#06121F;box-shadow:0 8px 26px color-mix(in srgb,var(--sw-accent) 45%,transparent);}
+    .sw-btn--ghost{color:var(--sw-ink);border-color:color-mix(in srgb,var(--sw-ink) 35%,transparent);}
+    .sw-copy__tags li{background:color-mix(in srgb,var(--sw-accent) 16%,#0A0F1E);color:color-mix(in srgb,var(--sw-accent) 80%,#fff);border-color:color-mix(in srgb,var(--sw-accent) 40%,transparent);}
+    .sw-route__label{background:color-mix(in srgb,#0A0F1E 85%,transparent);color:var(--sw-ink);border-color:color-mix(in srgb,var(--sw-accent) 30%,transparent);}
+    .sw-sky__glow{background:radial-gradient(60% 42% at 74% 16%,color-mix(in srgb,var(--sw-accent) 16%,transparent),transparent 70%),radial-gradient(46% 34% at 50% 55%,color-mix(in srgb,#8B5CF6 10%,transparent),transparent 70%);}
+    .sw-hint i{border-color:color-mix(in srgb,var(--sw-ink) 40%,transparent);}
+    .sw-copy__title{text-shadow:0 2px 28px rgba(6,10,22,.9);}
+    .sw-copy__body{color:#C4CDE4;text-shadow:0 1px 14px rgba(6,10,22,.9);}
+
+    /* ================================================================
+       KONTEN DI BAWAH HERO — design "Nocturne"
+       (diimpor dari claude.ai/design · Scroll World Nocturne redesign)
+
+       Hero scroll-world di atas TIDAK diubah — blok ini hanya menata
+       yang muncul setelah video terakhir. Token Nocturne memakai nama
+       --color-* / --font-* sehingga tidak bertabrakan dengan --sw-*
+       milik hero.
+       ================================================================ */
+
+    /* ── token Nocturne ─────────────────────────────────────────────── */
+    :root {
+      --color-bg: #161826;
+      --color-surface: #232532;
+      --color-text: #e9e9ed;
+      --color-accent: #9184d9;
+      --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
+
+      --color-neutral-300: #cfd3e5;
+      --color-neutral-500: #9397ab;
+      --color-neutral-700: #595d6c;
+      --color-neutral-800: #3f424d;
+      --color-neutral-900: #292b31;
+
+      --color-accent-200: #e7e5fe;
+      --color-accent-300: #d2cefd;
+      --color-accent-800: #423a6a;
+      --color-accent-900: #2b2741;
+
+      --color-section: #262a60;
+      --color-section-glow: #353b80;
+
+      --font-heading: "Inter", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+
+      --space-2: 5.6px; --space-3: 8.4px; --space-6: 16.8px; --space-8: 22.4px;
+      --radius-sm: 4px; --radius-md: 8px;
+
+      /* ritme vertikal 28px milik Nocturne */
+      --leading: 28px;
+      --half: 14px;
+      --edge: clamp(20px, 5vw, 72px);
+      --measure: 58ch;
+    }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    /* ── tombol Nocturne (dipakai section penutup) ───────────────────── */
+    #lanjutan .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      cursor: pointer; text-decoration: none;
+      font-family: var(--font-heading); font-weight: 500;
+      font-size: 14px; line-height: 1.2; color: var(--color-text);
+      background: transparent; border: 1px solid transparent;
+      padding: 10px 16px; border-radius: var(--radius-md);
+    }
+    #lanjutan .btn-primary { color: var(--color-accent); border-color: var(--color-accent); }
+    #lanjutan .btn-primary:hover { background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+    #lanjutan .btn-secondary { border-color: var(--color-divider); color: var(--color-text); }
+    #lanjutan .btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+    #lanjutan .btn-ghost { color: var(--color-accent); padding-inline: 4px; }
+    #lanjutan .btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+
+    /* ── kerangka konten ─────────────────────────────────────────────
+       Lapisan fixed engine: sky(0) stage(10) copylayer(20) hint(30)
+       route(40) topbar(50) scrollbar(60). Konten memakai z-index 45 +
+       latar solid: menutup dunia video saat naik, topbar tetap di atas.
+       ───────────────────────────────────────────────────────────────── */
+    #lanjutan {
+      position: relative; z-index: 45; background: var(--color-bg);
+      font-family: var(--font-body); color: var(--color-text); font-size: 15px;
+      line-height: 1.55;
+    }
+    #lanjutan *, #lanjutan *::before, #lanjutan *::after { box-sizing: border-box; }
+    #lanjutan .wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); }
+    #lanjutan section { scroll-margin-top: 84px; }
+    #lanjutan p { margin: 0; }
+    #lanjutan h2, #lanjutan h3 { font-family: var(--font-heading); font-weight: 500; margin: 0; }
+    #lanjutan a { color: var(--color-accent); }
+    #lanjutan a:hover { color: var(--color-accent-300); }
+
+    .rule { height: 1px; border: 0; margin: 0;
+      background: linear-gradient(to right, transparent, var(--color-divider) 48px calc(100% - 48px), transparent); }
+
+    .kicker {
+      position: relative; display: block; font-family: var(--font-heading); font-weight: 500;
+      font-size: 13px; line-height: var(--half); letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--color-accent); font-feature-settings: "tnum" 1; margin: 0 0 var(--half);
+    }
+    .kicker::before { content: ""; position: absolute; left: -64px; top: calc(50% - 0.5px);
+      width: 44px; height: 1px; background: var(--color-accent); }
+    @media (max-width: 1280px) { .kicker::before { display: none; } }
+
+    .sec { padding: calc(3 * var(--leading)) 0 calc(2.5 * var(--leading)); }
+    .sec-head { max-width: 760px; margin-bottom: calc(2 * var(--leading)); }
+    .sec-head h2 {
+      font-size: clamp(32px, 3.8vw, 50px); line-height: clamp(36px, 4.2vw, 56px);
+      letter-spacing: -0.015em; margin-left: -0.06em;
+    }
+    .sec-head h2 em { font-style: normal; color: var(--color-accent-300); }
+    .sec-head .sub {
+      font-size: 16px; line-height: var(--leading); margin: var(--half) 0 0;
+      max-width: var(--measure); color: color-mix(in srgb, var(--color-text) 76%, transparent);
+    }
+
+    /* baris fitur bernomor, dipisah rule yang memudar */
+    .row {
+      display: grid; grid-template-columns: minmax(84px, 132px) minmax(0, 340px) minmax(0, 1fr);
+      gap: var(--leading) clamp(24px, 4vw, 64px); align-items: baseline;
+      padding: calc(1.5 * var(--leading)) 0;
+    }
+    .row + .row { position: relative; }
+    .row + .row::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--color-neutral-700) 48px calc(100% - 48px), transparent); }
+    .row-num { position: relative; font-family: var(--font-heading); font-weight: 500; font-size: 15px;
+      line-height: var(--leading); color: var(--color-accent); font-feature-settings: "tnum" 1; margin: 0; }
+    .row-tag { display: block; font-size: 12px; line-height: var(--half); letter-spacing: 0.06em;
+      text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 50%, transparent); margin-top: 6px; }
+    .row-title { font-size: 24px; line-height: var(--leading); letter-spacing: -0.01em; }
+    .row-copy { font-size: 15.5px; line-height: var(--leading); margin: var(--half) 0 0;
+      color: color-mix(in srgb, var(--color-text) 76%, transparent); max-width: 46ch; }
+    .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .list li { position: relative; padding-left: 18px; font-size: 15px; line-height: var(--leading);
+      color: color-mix(in srgb, var(--color-text) 82%, transparent); }
+    .list li::before { content: ""; position: absolute; left: 0; top: 13px; width: 8px; height: 1px;
+      background: var(--color-accent); }
+    .list li b { font-weight: 600; color: var(--color-text); }
+    .stack { font-size: 12px; line-height: var(--leading); letter-spacing: 0.04em;
+      color: color-mix(in srgb, var(--color-text) 46%, transparent);
+      margin: var(--half) 0 0; font-feature-settings: "tnum" 1; }
+
+    /* satu-satunya bidang tersaturasi: band angka */
+    .band { background:
+        radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%),
+        var(--color-section);
+      padding: calc(2.5 * var(--leading)) 0; }
+    .band .grid { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between;
+      gap: calc(1.5 * var(--leading)) var(--leading); }
+    .band-num { font-family: var(--font-heading); font-weight: 500; font-size: clamp(34px, 3.4vw, 50px);
+      line-height: calc(2 * var(--leading)); margin: 0 0 0 -0.055em; color: var(--color-text);
+      font-feature-settings: "tnum" 1; }
+    .band-label { font-size: 13px; line-height: var(--half); letter-spacing: 0.06em; text-transform: uppercase;
+      color: color-mix(in srgb, var(--color-text) 64%, transparent); margin: var(--half) 0 0; }
+
+    /* chips stack */
+    .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; }
+    .chips li { font-family: var(--font-heading); font-weight: 500; font-size: 11.5px; letter-spacing: 0.02em;
+      padding: 4px 10px; border-radius: var(--radius-sm);
+      background: var(--color-neutral-900); color: var(--color-neutral-300);
+      border: 1px solid var(--color-neutral-800); }
+
+    /* kartu AI */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px;
+      background: var(--color-divider); border-top: 1px solid var(--color-divider);
+      border-bottom: 1px solid var(--color-divider); }
+    .tile { position: relative; background: var(--color-bg);
+      padding: calc(1.25 * var(--leading)) clamp(20px, 2.4vw, 32px);
+      display: flex; flex-direction: column; gap: 0; transition: background .25s; }
+    .tile:hover { background: var(--color-surface); }
+    .tile i.ph { font-size: 22px; color: var(--color-accent); line-height: 1; }
+    .tile h3 { font-size: 18px; line-height: var(--leading); letter-spacing: -0.01em; margin: var(--half) 0 0; }
+    .tile p { font-size: 14.5px; line-height: var(--leading); margin: 6px 0 var(--leading);
+      color: color-mix(in srgb, var(--color-text) 74%, transparent); }
+    .tile .chips { margin-top: auto; }
+
+    /* dua kolom */
+    .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: calc(2 * var(--leading)) clamp(32px, 5vw, 88px); }
+    .col h3 { font-size: 20px; line-height: var(--leading); letter-spacing: -0.01em;
+      margin: 0 0 6px; display: flex; align-items: center; gap: 9px; }
+    .col h3 i.ph { font-size: 18px; color: var(--color-accent); }
+    .col .note { font-size: 15px; line-height: var(--leading); margin: 0 0 var(--half);
+      color: color-mix(in srgb, var(--color-text) 66%, transparent); }
+
+    /* penutup */
+    .close h2 { font-size: clamp(32px, 4vw, 54px); line-height: clamp(36px, 4.4vw, 60px);
+      letter-spacing: -0.015em; margin-left: -0.06em; }
+    .close h2 em { font-style: normal; color: var(--color-accent-300); }
+    .close .sub { font-size: 16px; line-height: var(--leading); margin: var(--half) 0 0;
+      max-width: var(--measure); color: color-mix(in srgb, var(--color-text) 76%, transparent); }
+    .close .row-cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--leading); }
+    #lanjutan footer { padding: calc(1.5 * var(--leading)) 0 calc(2 * var(--leading));
+      font-size: 13px; line-height: var(--leading); display: flex; justify-content: space-between;
+      gap: var(--half) var(--leading); flex-wrap: wrap;
+      color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+    #lanjutan footer a { color: color-mix(in srgb, var(--color-text) 55%, transparent); text-decoration: none; }
+    #lanjutan footer a:hover { color: var(--color-accent); }
+
+    /* ── jembatan dari hero ke konten ────────────────────────────────── */
+    body.past-world .sw-topbar {
+      background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 var(--color-divider);
+    }
+    body.past-world .sw-route, body.past-world .sw-hint,
+    body.past-world .sw-scrollbar, body.past-world .sw-copylayer { opacity: 0; pointer-events: none; }
+    .sw-route, .sw-hint, .sw-scrollbar, .sw-copylayer { transition: opacity .4s; }
+    /* Engine menyisakan satu layar penuh di ujung track tempat frame terakhir
+       hanya menahan. Margin negatif memotong 40% jeda itu, jadi Portofolio mulai
+       naik tepat saat scene terakhir selesai — tanpa pita kosong. */
+    .sw-track { margin-bottom: -40vh; }
+    #portofolio { padding-top: calc(1.25 * var(--leading)); }
+
+    /* ── mekanisme scroll-world untuk konten ──────────────────────────
+       Prinsipnya sama dengan dunia video: posisi scroll dipetakan 1:1 ke
+       keadaan elemen (--t, 0..1) lewat satu rAF — bukan animasi yang
+       berjalan sendiri. Karena itu tetap aman di reduced-motion.
+       ───────────────────────────────────────────────────────────────── */
+    .rev { --t: 0; opacity: var(--t); transform: translateY(calc((1 - var(--t)) * 30px));
+      will-change: opacity, transform; }
+    .row + .row::before { background-repeat: no-repeat; background-size: calc(var(--t) * 100%) 1px; }
+    .row-num::after { content: ""; position: absolute; left: 0; bottom: -7px; height: 1px;
+      width: calc(var(--t) * 44px); background: var(--color-accent); }
+    .tile::before { content: ""; position: absolute; left: 0; top: 0; width: 1px;
+      height: calc(var(--t) * 100%); background: var(--color-accent); opacity: 0.55; }
+
+    /* lit ground konten — bloom yang bergeser mengikuti scroll.
+       Elemen ini position:fixed di dalam #lanjutan (z-index 45), jadi tanpa
+       penjagaan ia melukis satu layar penuh sepanjang waktu — menimpa video
+       hero dan merebut waktu kompositor dari seek klip. Karena itu ia baru
+       dinyalakan (dan baru dilukis) setelah perjalanan video usai. */
+    .doc-glow {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: 0; visibility: hidden; transition: opacity .4s;
+      background:
+        radial-gradient(1000px 620px at calc(82% + var(--gx, 0px)) calc(-8% + var(--gy, 0px)),
+          color-mix(in srgb, var(--color-accent-900) 74%, transparent), transparent 62%),
+        radial-gradient(900px 700px at -6% 106%,
+          color-mix(in srgb, black 28%, transparent), transparent 55%);
+    }
+    body.past-world .doc-glow { opacity: 1; visibility: visible; }
+    #lanjutan > section, #lanjutan > .rule { position: relative; z-index: 1; }
+
+    /* rel bab konten — meneruskan bahasa rel scene di dunia video */
+    .doc-rail {
+      position: fixed; right: clamp(14px, 2.4vw, 34px); top: 50%; transform: translateY(-50%);
+      z-index: 46; display: flex; flex-direction: column; gap: var(--space-8);
+      padding: var(--space-6) 10px; opacity: 0; pointer-events: none; transition: opacity .4s;
+    }
+    body.past-world .doc-rail { opacity: 1; pointer-events: auto; }
+    .doc-rail::before {
+      content: ""; position: absolute; left: 50%; top: 22px; bottom: 22px; width: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, transparent, var(--color-divider) 24px calc(100% - 24px), transparent);
+    }
+    .doc-rail button { position: relative; border: 0; background: transparent; cursor: pointer;
+      width: 14px; height: 14px; display: grid; place-items: center; padding: 0; }
+    .doc-rail button i { width: 7px; height: 7px; border-radius: 50%;
+      background: color-mix(in srgb, var(--color-text) 30%, transparent);
+      transition: transform .3s, background .3s, box-shadow .3s; }
+    .doc-rail button:hover i { background: var(--color-accent-300); transform: scale(1.2); }
+    .doc-rail button.is-active i { background: var(--color-accent); transform: scale(1.3);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 20%, transparent); }
+    .doc-rail .lbl {
+      position: absolute; right: 24px; top: 50%; transform: translateY(-50%) translateX(6px);
+      white-space: nowrap; font-family: var(--font-heading); font-weight: 500; font-size: 12px;
+      color: var(--color-text); padding: 4px 9px; border-radius: var(--radius-sm);
+      background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+      border: 1px solid var(--color-divider);
+      opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+    }
+    .doc-rail button:hover .lbl, .doc-rail button.is-active .lbl {
+      opacity: 1; transform: translateY(-50%) translateX(0);
+    }
+
+    /* progress konten — melanjutkan progress bar dunia video */
+    .doc-progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 61;
+      background: color-mix(in srgb, var(--color-text) 10%, transparent);
+      opacity: 0; pointer-events: none; transition: opacity .4s;
+    }
+    .doc-progress span { display: block; height: 100%; transform-origin: 0 50%; transform: scaleX(0);
+      background: var(--color-accent); }
+    body.past-world .doc-progress { opacity: 1; }
+
+    /* ── responsif ───────────────────────────────────────────────────── */
+    @media (max-width: 980px) {
+      .row { grid-template-columns: minmax(72px, 96px) minmax(0, 1fr); }
+      .row > *:nth-child(3) { grid-column: 2; }
+      .band .grid { grid-template-columns: repeat(2, 1fr); justify-content: start; }
+    }
+    @media (max-width: 860px) {
+      .doc-rail { display: none; }
+      .row { grid-template-columns: 1fr; gap: var(--half); padding: calc(1.25 * var(--leading)) 0; }
+      .row > *:nth-child(3) { grid-column: 1; }
+      .row-title { font-size: 21px; }
+      .sec { padding: calc(2.25 * var(--leading)) 0 calc(1.75 * var(--leading)); }
+      .sec-head { margin-bottom: calc(1.25 * var(--leading)); }
+      .cards { grid-template-columns: 1fr; }
+      #lanjutan footer { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world"></div>
+
+  <div class="doc-progress"><span></span></div>
+
+  <nav class="doc-rail">
+    <button type="button" data-target="#portofolio"><span class="lbl">Portofolio</span><i></i></button>
+    <button type="button" data-target="#arsitektur"><span class="lbl">Arsitektur</span><i></i></button>
+    <button type="button" data-target="#keamanan"><span class="lbl">Keamanan</span><i></i></button>
+    <button type="button" data-target="#ai-lanjut"><span class="lbl">Fitur AI</span><i></i></button>
+    <button type="button" data-target="#proses"><span class="lbl">Cara Kerja</span><i></i></button>
+    <button type="button" data-target="#serah-terima"><span class="lbl">Serah Terima</span><i></i></button>
+    <button type="button" data-target="#mulai"><span class="lbl">Mulai</span><i></i></button>
+  </nav>
+
+  <main id="lanjutan">
+    <div class="doc-glow"></div>
+
+    <section id="portofolio" class="sec">
+      <div class="wrap">
+        <div class="sec-head rev">
+          <span class="kicker">01 — Portofolio Solusi</span>
+          <h2>Enam cetak biru, <em>siap disesuaikan.</em></h2>
+          <p class="sub">Bukan daftar klien. Ini jenis aplikasi yang kami bangun, lengkap dengan fitur inti dan teknologi yang dipakai membangunnya.</p>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">01</p>
+            <span class="row-tag">Travel &amp; Open Trip</span>
+          </div>
+          <div>
+            <h3 class="row-title">Booking perjalanan yang jalan sendiri</h3>
+            <p class="row-copy">Katalog destinasi, kuota keberangkatan, dan pembayaran berjalan otomatis 24 jam — tanpa balas chat satu per satu.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Kalender keberangkatan &amp; sisa kuota realtime</li>
+              <li>DP dan pelunasan via QRIS &amp; virtual account</li>
+              <li>E-ticket QR plus reminder otomatis WhatsApp</li>
+              <li>Dashboard peserta &amp; rekap penjualan</li>
+            </ul>
+            <p class="stack">Next.js · PostgreSQL · Midtrans · FullCalendar</p>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">02</p>
+            <span class="row-tag">Properti</span>
+          </div>
+          <div>
+            <h3 class="row-title">Listing dengan tur 360°</h3>
+            <p class="row-copy">Calon pembeli menjelajah unit dari rumah. Yang datang survei tinggal yang benar-benar serius.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Virtual tour 360° &amp; galeri imersif</li>
+              <li>Filter harga, lokasi, tipe, dan luas</li>
+              <li>Peta sebaran unit dengan Mapbox</li>
+              <li>Formulir survei langsung ke WhatsApp agen</li>
+            </ul>
+            <p class="stack">React · Mapbox GL · Supabase · Cloudflare Images</p>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">03</p>
+            <span class="row-tag">Otomotif</span>
+          </div>
+          <div>
+            <h3 class="row-title">Booking servis &amp; antrian live</h3>
+            <p class="row-copy">Pelanggan memilih jadwal sendiri dan memantau progres pengerjaan tanpa menelepon bengkel.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Slot jadwal otomatis sesuai kapasitas bay</li>
+              <li>Status pengerjaan realtime plus notifikasi</li>
+              <li>Riwayat servis &amp; reminder berkala</li>
+              <li>Estimasi biaya dan approval digital</li>
+            </ul>
+            <p class="stack">Laravel · MySQL · Socket.io · Web Push</p>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">04</p>
+            <span class="row-tag">Kuliner &amp; Retail</span>
+          </div>
+          <div>
+            <h3 class="row-title">Toko online plus kasir POS</h3>
+            <p class="row-copy">Pesanan dari web langsung masuk ke dapur. Stok dan laporan tersusun sendiri.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Menu digital, pre-order, dan QRIS</li>
+              <li>Kasir POS offline-ready berbasis PWA</li>
+              <li>Manajemen stok &amp; bahan baku</li>
+              <li>Laporan penjualan harian ke Excel</li>
+            </ul>
+            <p class="stack">Vue · IndexedDB · Xendit · SheetJS</p>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">05</p>
+            <span class="row-tag">Agrikultur &amp; IoT</span>
+          </div>
+          <div>
+            <h3 class="row-title">Dashboard smart-farming</h3>
+            <p class="row-copy">Sensor lapangan dan drone terhubung ke satu layar: kondisi lahan terbaca, keputusan lebih cepat.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Pemetaan lahan &amp; polygon area</li>
+              <li>Grafik sensor suhu, kelembapan, dan pH</li>
+              <li>Peringatan dini via Telegram atau WhatsApp</li>
+              <li>AI analysis untuk prediksi panen</li>
+            </ul>
+            <p class="stack">Next.js · TimescaleDB · MQTT · ECharts</p>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">06</p>
+            <span class="row-tag">Event &amp; Wedding</span>
+          </div>
+          <div>
+            <h3 class="row-title">Undangan digital dengan RSVP</h3>
+            <p class="row-copy">Undangan web yang elegan, sekaligus alat kelola tamu yang rapi bagi tuan rumah.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Galeri cerita, hitung mundur, peta lokasi</li>
+              <li>RSVP &amp; buku tamu digital</li>
+              <li>Amplop digital QRIS dan live streaming</li>
+              <li>Check-in tamu lewat scan QR</li>
+            </ul>
+            <p class="stack">Astro · Supabase · ZXing · Midtrans</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap">
+        <div class="grid">
+          <div>
+            <p class="band-num" data-to="6">6</p>
+            <p class="band-label">Cetak biru solusi</p>
+          </div>
+          <div>
+            <p class="band-num" data-to="4">4</p>
+            <p class="band-label">Lapisan arsitektur</p>
+          </div>
+          <div>
+            <p class="band-num" data-to="9">9</p>
+            <p class="band-label">Fitur AI siap tanam</p>
+          </div>
+          <div>
+            <p class="band-num" data-to="4">4</p>
+            <p class="band-label">Di antaranya nol biaya API</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="arsitektur" class="sec">
+      <div class="wrap">
+        <div class="sec-head rev">
+          <span class="kicker">02 — Arsitektur &amp; Backend</span>
+          <h2>Fondasi yang <em>dipilih, bukan diikuti.</em></h2>
+          <p class="sub">Setiap lapisan matang, terdokumentasi, dan hemat biaya operasional — bukan karena sedang tren.</p>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">01</p>
+            <span class="row-tag">Frontend</span>
+          </div>
+          <div>
+            <h3 class="row-title">Yang dilihat pengguna</h3>
+            <p class="row-copy">Rendering di server, lazy loading, dan CDN global — halaman terbuka cepat bahkan di jaringan seluler.</p>
+          </div>
+          <div>
+            <ul class="chips">
+              <li>Next.js</li><li>React</li><li>Vue</li><li>Astro</li>
+              <li>TypeScript</li><li>Tailwind CSS</li><li>PWA / Offline</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">02</p>
+            <span class="row-tag">API &amp; Aplikasi</span>
+          </div>
+          <div>
+            <h3 class="row-title">Otak proses bisnis</h3>
+            <p class="row-copy">Aturan bisnis, integrasi pembayaran, dan pekerjaan terjadwal hidup di sini — terpisah dari tampilan.</p>
+          </div>
+          <div>
+            <ul class="chips">
+              <li>Node.js / Express</li><li>Laravel (PHP)</li><li>REST API</li>
+              <li>WebSocket realtime</li><li>Queue &amp; Cron</li><li>Webhook</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">03</p>
+            <span class="row-tag">Data</span>
+          </div>
+          <div>
+            <h3 class="row-title">Tempat semuanya tersimpan</h3>
+            <p class="row-copy">Skema ternormalisasi dan backup terjadwal: menambah cabang atau modul baru tidak berarti membangun ulang.</p>
+          </div>
+          <div>
+            <ul class="chips">
+              <li>PostgreSQL</li><li>MySQL / MariaDB</li><li>Supabase</li>
+              <li>Redis cache</li><li>Object Storage</li><li>Backup terjadwal</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">04</p>
+            <span class="row-tag">Infrastruktur</span>
+          </div>
+          <div>
+            <h3 class="row-title">Tempat aplikasi hidup</h3>
+            <p class="row-copy">Repository, domain, dan seluruh akun layanan atas nama Anda. Dokumentasi teknis diserahkan lengkap.</p>
+          </div>
+          <div>
+            <ul class="chips">
+              <li>Vercel / Netlify</li><li>VPS + Docker</li><li>Cloudflare CDN &amp; WAF</li>
+              <li>GitHub Actions CI/CD</li><li>Monitoring &amp; Log</li><li>SSL otomatis</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="keamanan" class="sec">
+      <div class="wrap">
+        <div class="sec-head rev">
+          <span class="kicker">03 — Autentikasi &amp; Keamanan</span>
+          <h2>Dijaga sejak <em>baris pertama.</em></h2>
+          <p class="sub">Keamanan bukan tambahan di akhir proyek. Ia bagian dari rancangan sejak awal, mengikuti panduan OWASP Top 10.</p>
+        </div>
+
+        <div class="cols">
+          <div class="col rev">
+            <h3><i class="ph ph-lock-key"></i>Sistem autentikasi</h3>
+            <p class="note">Pilih yang paling pas dengan cara kerja tim dan pelanggan Anda.</p>
+            <ul class="list">
+              <li><b>Email &amp; password</b> — hash Argon2 atau bcrypt, tidak pernah disimpan polos</li>
+              <li><b>Login Google / OAuth2</b> — tanpa password baru untuk diingat</li>
+              <li><b>Magic link &amp; OTP WhatsApp</b> — praktis untuk pengguna awam</li>
+              <li><b>2FA (TOTP)</b> — lapisan kedua untuk akun admin</li>
+              <li><b>Session &amp; JWT</b> — token berumur pendek plus refresh token</li>
+            </ul>
+          </div>
+
+          <div class="col rev">
+            <h3><i class="ph ph-users-three"></i>Hak akses berjenjang</h3>
+            <p class="note">Setiap orang hanya melihat yang menjadi urusannya.</p>
+            <ul class="list">
+              <li><b>Peran fleksibel</b> — owner, admin, staf, kasir, klien</li>
+              <li><b>Izin per modul</b> — lihat, tambah, ubah, hapus, ekspor</li>
+              <li><b>Multi-cabang</b> — data terpisah antar outlet atau tim</li>
+              <li><b>Audit log</b> — siapa mengubah apa dan kapan</li>
+              <li><b>Cabut akses instan</b> — saat karyawan keluar</li>
+            </ul>
+          </div>
+
+          <div class="col rev">
+            <h3><i class="ph ph-shield-check"></i>Perlindungan aplikasi</h3>
+            <p class="note">Lapisan standar yang dipasang di setiap proyek.</p>
+            <ul class="list">
+              <li><b>HTTPS/TLS</b> di semua halaman, sertifikat diperbarui otomatis</li>
+              <li><b>Anti SQL injection</b> lewat prepared statement dan ORM</li>
+              <li><b>Anti XSS &amp; CSRF</b> — sanitasi input, token per formulir</li>
+              <li><b>Rate limiting</b> — menahan brute force dan spam pendaftaran</li>
+              <li><b>Security headers</b> — CSP, HSTS, X-Frame-Options</li>
+            </ul>
+          </div>
+
+          <div class="col rev">
+            <h3><i class="ph ph-database"></i>Perlindungan data</h3>
+            <p class="note">Yang menjaga bisnis tetap jalan saat ada yang salah.</p>
+            <ul class="list">
+              <li><b>Backup otomatis harian</b> dengan uji pemulihan berkala</li>
+              <li><b>Enkripsi data sensitif</b> saat disimpan maupun dikirim</li>
+              <li><b>Upload aman</b> — validasi tipe file dan pemindaian</li>
+              <li><b>WAF &amp; anti-DDoS</b> lewat Cloudflare</li>
+              <li><b>Kepatuhan UU PDP</b> — data pribadi seperlunya saja</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ai-lanjut" class="sec">
+      <div class="wrap">
+        <div class="sec-head rev">
+          <span class="kicker">04 — Fitur AI</span>
+          <h2>Kecerdasan yang bisa <em>ditanam ke aplikasi Anda.</em></h2>
+          <p class="sub">Bisa masuk ke aplikasi baru maupun yang sudah berjalan. Empat di antaranya berjalan di browser — tanpa biaya API sama sekali.</p>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="tile rev">
+          <i class="ph ph-chat-circle-dots"></i>
+          <h3>AI Chatbot (RAG)</h3>
+          <p>Dilatih dengan dokumen dan katalog Anda sendiri, jadi menjawab sesuai fakta bisnis — bukan mengarang. Eskalasi ke WhatsApp bila butuh manusia.</p>
+          <ul class="chips"><li>Gemini API</li><li>Groq / Llama</li><li>Vector DB</li></ul>
+        </div>
+        <div class="tile rev">
+          <i class="ph ph-chart-line-up"></i>
+          <h3>AI Analysis</h3>
+          <p>Membaca data penjualan dan operasional, lalu menyajikan tren, anomali, dan saran tindakan dalam bahasa Indonesia yang mudah dipahami.</p>
+          <ul class="chips"><li>Ringkasan otomatis</li><li>Deteksi anomali</li><li>Forecasting</li></ul>
+        </div>
+        <div class="tile rev">
+          <i class="ph ph-file-text"></i>
+          <h3>OCR &amp; dokumen cerdas</h3>
+          <p>Foto KTP, faktur, atau nota berubah menjadi data terstruktur siap pakai. Berjalan di browser — data tidak keluar dari perangkat pengguna.</p>
+          <ul class="chips"><li>Tesseract.js</li><li>PDF.js</li><li>Ekstraksi terstruktur</li></ul>
+        </div>
+        <div class="tile rev">
+          <i class="ph ph-microphone"></i>
+          <h3>Suara &amp; aksesibilitas</h3>
+          <p>Pencarian suara, dikte formulir, dan pembacaan konten untuk pengguna dengan keterbatasan penglihatan. Nol biaya API.</p>
+          <ul class="chips"><li>Web Speech API</li><li>Speech-to-Text</li><li>Text-to-Speech</li></ul>
+        </div>
+        <div class="tile rev">
+          <i class="ph ph-magnifying-glass"></i>
+          <h3>Pencarian semantik</h3>
+          <p>Pengguna mengetik maksud, bukan kata kunci persis — hasil tetap relevan. Sekaligus dasar untuk rekomendasi produk personal.</p>
+          <ul class="chips"><li>Embeddings</li><li>pgvector</li><li>Rekomendasi</li></ul>
+        </div>
+        <div class="tile rev">
+          <i class="ph ph-eye"></i>
+          <h3>Analisis gambar</h3>
+          <p>Klasifikasi foto produk, deteksi kerusakan barang, verifikasi bukti transfer, hingga moderasi konten unggahan pengguna.</p>
+          <ul class="chips"><li>Vision API</li><li>TensorFlow.js</li><li>Moderasi</li></ul>
+        </div>
+        <div class="tile rev">
+          <i class="ph ph-pen-nib"></i>
+          <h3>Generator konten</h3>
+          <p>Deskripsi produk, caption promosi, dan draf balasan email tersusun otomatis — tim Anda tinggal menyunting seperlunya.</p>
+          <ul class="chips"><li>Deskripsi produk</li><li>Draft email</li><li>SEO copy</li></ul>
+        </div>
+        <div class="tile rev">
+          <i class="ph ph-gear"></i>
+          <h3>Otomasi alur kerja</h3>
+          <p>Klasifikasi tiket masuk, penjadwalan cerdas, dan pengingat otomatis — mengurangi pekerjaan berulang yang menyita waktu tim.</p>
+          <ul class="chips"><li>Klasifikasi tiket</li><li>Auto-routing</li><li>Reminder</li></ul>
+        </div>
+        <div class="tile rev">
+          <i class="ph ph-map-trifold"></i>
+          <h3>Peta &amp; geospasial</h3>
+          <p>Pemetaan wilayah, heatmap sebaran pelanggan, optimasi rute pengiriman, dan pelacakan armada secara langsung.</p>
+          <ul class="chips"><li>Mapbox GL</li><li>Leaflet + OSM</li><li>Live tracking</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="proses" class="sec">
+      <div class="wrap">
+        <div class="sec-head rev">
+          <span class="kicker">05 — Cara Kerja</span>
+          <h2>Prosesnya <em>terbuka dari awal.</em></h2>
+          <p class="sub">Anda tahu sedang di tahap mana, apa yang sedang dikerjakan, dan apa yang Anda terima di setiap langkah.</p>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">01</p>
+            <span class="row-tag">Gratis · 1–3 hari</span>
+          </div>
+          <div>
+            <h3 class="row-title">Konsultasi &amp; analisis</h3>
+            <p class="row-copy">Kami dengarkan cara bisnis Anda berjalan hari ini, lalu petakan mana yang benar-benar perlu dibuatkan sistem — dan mana yang belum perlu.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Pemetaan proses &amp; titik yang paling memakan waktu</li>
+              <li>Rekomendasi teknologi beserta alasannya</li>
+              <li>Perkiraan lingkup, waktu, dan biaya</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">02</p>
+            <span class="row-tag">Sebelum mulai</span>
+          </div>
+          <div>
+            <h3 class="row-title">Proposal tertulis</h3>
+            <p class="row-copy">Semua yang disepakati masuk dokumen: fitur per fitur, timeline, dan angka. Tidak ada biaya yang muncul di tengah jalan.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Daftar fitur yang masuk — dan yang tidak</li>
+              <li>Timeline per milestone</li>
+              <li>Skema pembayaran &amp; masa garansi</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">03</p>
+            <span class="row-tag">Disetujui dulu</span>
+          </div>
+          <div>
+            <h3 class="row-title">Desain UI/UX</h3>
+            <p class="row-copy">Mockup selesai dan Anda setujui sebelum satu baris kode ditulis — jauh lebih murah mengubah gambar daripada mengubah aplikasi yang sudah jadi.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Alur layar utama, bukan sekadar tampilan cantik</li>
+              <li>Versi desktop dan mobile</li>
+              <li>Revisi sampai cocok, sebelum development</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">04</p>
+            <span class="row-tag">Bisa dipantau</span>
+          </div>
+          <div>
+            <h3 class="row-title">Development iteratif</h3>
+            <p class="row-copy">Progres tersedia di URL staging sejak minggu pertama. Anda mencoba sendiri, memberi masukan, dan masukan itu masuk di iterasi berikutnya.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>URL staging yang selalu terbarui</li>
+              <li>Laporan progres berkala</li>
+              <li>Perubahan kecil ditampung tanpa drama</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">05</p>
+            <span class="row-tag">Sebelum rilis</span>
+          </div>
+          <div>
+            <h3 class="row-title">Testing &amp; peluncuran</h3>
+            <p class="row-copy">Diuji fungsi, kecepatan, dan keamanannya dulu. Baru dipasang ke domain Anda beserta analytics dan backup.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Uji lintas perangkat &amp; browser</li>
+              <li>Pemeriksaan kecepatan dan celah keamanan</li>
+              <li>Setup domain, SSL, analytics, backup</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row rev">
+          <div>
+            <p class="row-num">06</p>
+            <span class="row-tag">Setelah rilis</span>
+          </div>
+          <div>
+            <h3 class="row-title">Garansi &amp; dukungan</h3>
+            <p class="row-copy">Bug pada masa garansi diperbaiki tanpa biaya. Tim Anda dilatih memakainya, dan maintenance bulanan tersedia kalau dibutuhkan.</p>
+          </div>
+          <div>
+            <ul class="list">
+              <li>Perbaikan bug gratis selama masa garansi</li>
+              <li>Pelatihan penggunaan + panduan tertulis</li>
+              <li>Opsi maintenance &amp; pengembangan lanjutan</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="serah-terima" class="sec">
+      <div class="wrap">
+        <div class="sec-head rev">
+          <span class="kicker">06 — Serah Terima</span>
+          <h2>Yang Anda terima, <em>bukan cuma aplikasinya.</em></h2>
+          <p class="sub">Kami tidak mengunci klien. Setelah proyek selesai, Anda bisa melanjutkannya sendiri, dengan tim internal, atau dengan siapa pun.</p>
+        </div>
+
+        <div class="cols">
+          <div class="col rev">
+            <h3><i class="ph ph-git-branch"></i>Kode &amp; repository</h3>
+            <p class="note">Seluruh source code, atas nama Anda.</p>
+            <ul class="list">
+              <li>Repository Git lengkap dengan riwayat commit</li>
+              <li>Tanpa kode terenkripsi atau lisensi tersembunyi</li>
+              <li>Struktur folder yang rapi dan mudah dilanjutkan</li>
+            </ul>
+          </div>
+
+          <div class="col rev">
+            <h3><i class="ph ph-book-open"></i>Dokumentasi &amp; pelatihan</h3>
+            <p class="note">Supaya tim Anda tidak bergantung pada kami.</p>
+            <ul class="list">
+              <li>Panduan pemakaian untuk admin dan staf</li>
+              <li>Dokumentasi teknis: struktur data, API, deploy</li>
+              <li>Sesi pelatihan langsung + rekamannya</li>
+            </ul>
+          </div>
+
+          <div class="col rev">
+            <h3><i class="ph ph-key"></i>Akun &amp; kepemilikan</h3>
+            <p class="note">Semua terdaftar atas nama Anda sejak awal.</p>
+            <ul class="list">
+              <li>Domain, hosting, dan database milik Anda</li>
+              <li>Akun layanan pihak ketiga di tangan Anda</li>
+              <li>Kami hanya diberi akses selama pengerjaan</li>
+            </ul>
+          </div>
+
+          <div class="col rev">
+            <h3><i class="ph ph-lifebuoy"></i>Garansi &amp; kelanjutan</h3>
+            <p class="note">Rilis bukan akhir dari tanggung jawab.</p>
+            <ul class="list">
+              <li>Masa garansi bug sesuai paket</li>
+              <li>Backup terjadwal dan panduan pemulihan</li>
+              <li>Bebas memilih: lanjut dengan kami atau tidak</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mulai" class="sec close">
+      <div class="wrap">
+        <div class="rev">
+          <span class="kicker">07 — Mulai</span>
+          <h2>Bidang usaha Anda, <em>solusi berikutnya yang kami bangun.</em></h2>
+          <p class="sub">Konsultasi awal gratis — rekomendasi teknologi, gambaran fitur, dan estimasi biaya, tanpa komitmen apa pun.</p>
+          <div class="row-cta">
+            <a class="btn btn-primary" href="https://wa.me/6281234567890?text=Halo%20Alhadi%20Cyber%20Media%2C%20saya%20ingin%20konsultasi%20proyek." target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i>Chat WhatsApp</a>
+            <a class="btn btn-secondary" href="penawaran.html">Lihat penawaran &amp; harga</a>
+            <a class="btn btn-ghost" href="#top">Ulangi perjalanan</a>
+          </div>
+        </div>
+        <footer>
+          <span>© 2026 Alhadi Cyber Media — Website · WebApp · SaaS · AI</span>
+          <span><a href="#portofolio">Portofolio</a> · <a href="#arsitektur">Arsitektur</a> · <a href="#keamanan">Keamanan</a> · <a href="#proses">Cara Kerja</a> · <a href="penawaran.html">Penawaran</a></span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="vendor/scroll-world/scrub-engine.js"></script>
+  <script>
+    // ============================================================
+    //  VIDEO HERO — hasil pipeline flow/proses.sh ada di assets/vid/.
+    //  Set false untuk kembali ke mode poster saja (tanpa video).
+    // ============================================================
+    const PAKAI_VIDEO = true;
+    const vid = (name) => PAKAI_VIDEO ? { clip: `assets/vid/${name}.mp4`, clipMobile: `assets/vid/${name}-m.mp4` } : {};
+    // Poster tiap scene = frame pertama videonya (dibuat otomatis oleh flow/proses.sh).
+    // `n` boleh angka atau string ('1b') karena scene 1 dipotong dua beat.
+    const pic = (n) => `assets/poster/scene${n}.jpg`;
+
+    mountScrollWorld(document.getElementById('world'), {
+      brand: { name: 'Alhadi Cyber Media', href: '#top' },
+      cta: { label: 'Penawaran', href: 'penawaran.html' },
+      hint: 'scroll untuk menyelam',
+      diveScroll: 1.35,
+      connScroll: 0.9,
+      // Banyak pengguna Windows mematikan "Show animations" demi performa, dan itu
+      // membuat browser melaporkan prefers-reduced-motion: reduce — secara default
+      // engine lalu tidak memuat video sama sekali (hanya poster). Di halaman ini
+      // video ADALAH kontennya dan hanya bergerak saat pengunjung scroll, jadi klip
+      // tetap dimuat. Seluruh gerak dekoratif (partikel, ken-burns, parallax,
+      // smooth-scroll) tetap dimatikan otomatis saat reduced-motion aktif.
+      videoUnderReducedMotion: true,
+      sections: [
+        {
+          // Beat 1 — masih di dunia paralayang: apa yang kami kerjakan.
+          id: 'beranda', label: 'Beranda',
+          still: pic(1), ...vid('scene1'),
+          accent: '#22D3EE', scroll: 1.5, linger: 0.25,
+          eyebrow: 'Website · WebApp · SaaS · AI',
+          title: 'Apa pun kebutuhan usaha Anda, bisa jadi aplikasi.',
+          body: 'Dari booking sampai laporan — dirancang jadi website atau aplikasi yang dipakai sehari-hari. Scroll untuk melihat tiga contohnya.',
+          tags: ['Website', 'WebApp & SaaS', 'Fitur AI'],
+        },
+        {
+          // Beat 2 — kamera zoom-out, dunia tadi ternyata dashboard di laptop.
+          id: 'travel', label: 'Travel',
+          still: pic('1b'), ...vid('scene1b'),
+          accent: '#22D3EE', scroll: 1.4, linger: 0.3,
+          eyebrow: 'Contoh 1 · Website booking travel',
+          title: 'Booking perjalanan yang jalan sendiri.',
+          body: 'Katalog destinasi, kuota keberangkatan, dan pembayaran berjalan otomatis 24 jam — tanpa perlu balas chat satu per satu.',
+          tags: ['Booking Online', 'QRIS & VA', 'E-ticket QR'],
+        },
+        {
+          id: 'properti', label: 'Properti',
+          still: pic(2), ...vid('scene2'),
+          accent: '#FBBF24', linger: 0.3,
+          eyebrow: 'Contoh 2 · Website listing properti',
+          title: 'Listing rumah dengan tur 360°.',
+          body: 'Calon pembeli menjelajah unit dari rumah. Yang datang survei tinggal yang benar-benar serius.',
+          tags: ['Virtual Tour 360°', 'Peta Lokasi', 'Leads WhatsApp'],
+        },
+        {
+          id: 'otomotif', label: 'Otomotif',
+          still: pic(3), ...vid('scene3'),
+          accent: '#F97316', linger: 0.3,
+          eyebrow: 'Contoh 3 · Aplikasi booking servis',
+          title: 'Booking servis, antrian live.',
+          body: 'Pelanggan memilih jadwal sendiri dan memantau progres pengerjaan tanpa menelepon bengkel.',
+          tags: ['Booking Online', 'Antrian Realtime', 'Riwayat Servis'],
+        },
+        {
+          id: 'peluncuran', label: 'Peluncuran',
+          still: pic(4), ...vid('scene4'),
+          accent: '#F472B6', scroll: 1.4,
+          eyebrow: 'Website · WebApp · SaaS · AI',
+          title: 'Ide Anda, jadi aplikasi yang bekerja.',
+          body: 'Tiga contoh tadi kami bangun dari nol. Bidang usaha Anda bisa jadi yang berikutnya.',
+          tags: ['Analisis Kebutuhan', 'Desain Custom', 'Garansi & Dukungan'],
+        },
+        {
+          id: 'kontak', label: 'Mulai',
+          still: pic(5), ...vid('scene5'),
+          accent: '#60A5FA', scroll: 1.6,
+          eyebrow: 'Konsultasi gratis',
+          title: 'Mari bangun bersama kami.',
+          body: 'Ceritakan kebutuhan Anda — kami jawab dengan solusi teknologi, stack, dan estimasi yang jelas.',
+          tags: [],
+          cta: {
+            primary: { label: 'Konsultasi Gratis', href: 'mailto:ali.coolz30@gmail.com?subject=Konsultasi%20Proyek%20-%20Alhadi%20Cyber%20Media' },
+            secondary: { label: 'Lihat Penawaran Lengkap', href: 'penawaran.html' },
+          },
+        },
+      ],
+      // Panjang = sections.length - 1 (6 section → 5 slot).
+      // Nilai null = dua scene ber-crossfade langsung, tanpa connector:
+      //   [0] beranda → travel  : dua potongan berurutan dari klip yang sama,
+      //                           jadi frame sambungannya identik.
+      //   [4] peluncuran → mulai: roket lepas landas berlanjut ke roket membumbung.
+      connectors: PAKAI_VIDEO
+        ? [null, 'assets/vid/conn1.mp4', 'assets/vid/conn2.mp4', 'assets/vid/conn3.mp4', null]
+        : [],
+      connectorsMobile: PAKAI_VIDEO
+        ? [null, 'assets/vid/conn1-m.mp4', 'assets/vid/conn2-m.mp4', 'assets/vid/conn3-m.mp4', null]
+        : [],
+    });
+
+    // ── Pemanasan klip ──────────────────────────────────────────────────
+    // Engine baru memuat klip saat scene ±1,6 layar dari viewport, dan tiap
+    // klip ~5–8 MB. Kalau pengunjung menggulir cepat (atau melompat lewat
+    // nav), scene masih menampilkan poster diam — terasa seperti "macet".
+    // Mengunduh berurutan di latar menaruh semuanya di HTTP cache, jadi
+    // fetch milik engine langsung selesai. Dijalankan setelah `load` supaya
+    // tidak berebut bandwidth dengan render pertama, dan satu per satu
+    // supaya tidak memenuhi antrian koneksi.
+    // Pemanasan ini mengunduh ~16 MB (mobile) sampai ~46 MB (desktop) di muka.
+    // Itu tidak pantas dipaksakan ke pengunjung yang menghemat kuota atau
+    // sedang di jaringan lambat — mereka tetap dapat pengalaman penuh, hanya
+    // klipnya dimuat saat dibutuhkan saja (perilaku bawaan engine).
+    const koneksi = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const hematKuota = !!(koneksi && (koneksi.saveData
+      || /^(slow-)?2g$/.test(koneksi.effectiveType || '')));
+
+    if (PAKAI_VIDEO && !hematKuota) {
+      const hangatkan = () => {
+        const mobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+          || window.matchMedia('(max-width: 860px)').matches;
+        const s = mobile ? '-m' : '';
+        const daftar = ['scene1', 'conn1', 'scene2', 'conn2', 'scene3', 'conn3', 'scene4', 'scene5']
+          .map((n) => `assets/vid/${n}${s}.mp4`);
+        (function berikutnya(i) {
+          if (i >= daftar.length) return;
+          fetch(daftar[i], { cache: 'force-cache' })
+            .then((r) => r.blob())
+            .catch(() => {})
+            .then(() => setTimeout(() => berikutnya(i + 1), 60));
+        })(0);
+      };
+      if (document.readyState === 'complete') hangatkan();
+      else window.addEventListener('load', hangatkan, { once: true });
+    }
+
+    // ================================================================
+    //  KONTEN DI BAWAH HERO — design "Nocturne"
+    //  Mekanismenya sama dengan dunia video: satu rAF memetakan posisi
+    //  scroll ke keadaan tiap elemen (--t, 0..1). Tidak ada animasi yang
+    //  berjalan sendiri — semuanya digerakkan scroll pengunjung, jadi
+    //  tetap aman saat prefers-reduced-motion aktif.
+    // ================================================================
+    (function () {
+      const world = document.getElementById('world');
+      const track = world.querySelector('.sw-track');
+      const nav = world.querySelector('.sw-nav');
+      const ease = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+      const goto = (el) => {
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' });
+      };
+
+      // 1) Tautan section konten di nav atas (indeks di luar jangkauan highlight
+      //    engine, jadi tidak bentrok dengan penanda scene aktif). Dibatasi tiga
+      //    saja supaya topbar tidak penuh — rel bab di kanan sudah mencakup
+      //    ketujuh section konten begitu dunia video usai.
+      if (nav) {
+        [['Portofolio', '#portofolio'], ['Fitur AI', '#ai-lanjut'],
+         ['Cara Kerja', '#proses']].forEach(([label, href]) => {
+          const b = document.createElement('button');
+          b.className = 'sw-nav__item';
+          b.textContent = label;
+          b.addEventListener('click', () => goto(document.querySelector(href)));
+          nav.appendChild(b);
+        });
+      }
+
+      // 2) Rel bab konten (muncul setelah dunia video selesai).
+      const railBtns = Array.from(document.querySelectorAll('.doc-rail button'));
+      const railTargets = railBtns.map((b) => document.querySelector(b.dataset.target));
+      railBtns.forEach((b, i) => b.addEventListener('click', () => goto(railTargets[i])));
+
+      const lanjutan = document.getElementById('lanjutan');
+      const revs = Array.from(document.querySelectorAll('#lanjutan .rev'));
+      const nums = Array.from(document.querySelectorAll('.band-num'))
+        .map((el) => ({ el, to: parseInt(el.dataset.to, 10) || 0 }));
+      const glow = document.querySelector('.doc-glow');
+      const bar = document.querySelector('.doc-progress span');
+      const lastScene = world.querySelector('.sw-scene:last-child');
+
+      let queued = false;
+      function frame() {
+        queued = false;
+        const vh = window.innerHeight;
+        const y = window.scrollY;
+
+        // Topbar berubah jadi nav biasa begitu perjalanan video usai.
+        document.body.classList.toggle('past-world',
+          !!(track && y > track.offsetHeight - vh * 0.9));
+
+        // Engine memudarkan scene terakhir begitu klipnya habis, menyisakan
+        // langit kosong sebelum konten naik. Frame terakhir ditahan tetap
+        // terlihat sampai konten menutupinya.
+        if (track && lastScene && y > track.offsetHeight - vh - 8) {
+          lastScene.style.opacity = '1';
+          lastScene.style.zIndex = '120';
+        }
+
+        // Selama pengunjung masih di dunia video, konten jauh di bawah layar.
+        // Membaca getBoundingClientRect() untuk puluhan elemen di setiap frame
+        // memaksa layout sinkron dan merebut waktu dari seek video — jadi
+        // seluruh pekerjaan konten dilewati sampai ia benar-benar mendekat.
+        const top = lanjutan.offsetTop - y;
+        if (top > vh + 240) return;
+
+        // Terungkap begitu elemen menyentuh tepi bawah viewport, selesai dalam
+        // 32% layar — supaya tidak ada pita gelap tanpa isi saat konten naik.
+        for (const el of revs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -240 || r.top > vh + 240) continue;
+          el.style.setProperty('--t', ease((vh * 1.02 - r.top) / (vh * 0.32)).toFixed(3));
+        }
+        for (const n of nums) {
+          const r = n.el.getBoundingClientRect();
+          if (r.bottom < -240 || r.top > vh + 240) continue;
+          n.el.textContent = Math.round(n.to * ease((vh * 0.88 - r.top) / (vh * 0.32)));
+        }
+
+        const span = Math.max(1, lanjutan.offsetHeight - vh);
+        const p = Math.min(1, Math.max(0, -top / span));
+        if (bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+        if (glow) {
+          glow.style.setProperty('--gx', (-190 * p).toFixed(1) + 'px');
+          glow.style.setProperty('--gy', (46 * p).toFixed(1) + 'px');
+        }
+
+        let act = 0;
+        for (let i = 0; i < railTargets.length; i++) {
+          if (railTargets[i] && railTargets[i].getBoundingClientRect().top <= vh * 0.42) act = i;
+        }
+        // Section terakhir lebih pendek dari ambang 42%, jadi tidak pernah
+        // melewatinya. Saat sudah menyentuh dasar halaman, tandai bab terakhir.
+        if (y + vh >= document.documentElement.scrollHeight - 2) act = railTargets.length - 1;
+        railBtns.forEach((b, i) => b.classList.toggle('is-active', i === act));
+      }
+
+      const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(frame); } };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      frame();
+    })();
+  </script>
+</body>
+</html>

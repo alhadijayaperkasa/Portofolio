@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Penawaran & Solusi — Alhadi Cyber Media</title>
+<meta name="description" content="Penawaran profesional Alhadi Cyber Media: jasa website, webapp, SaaS, fitur AI (chatbot & analysis), integrasi Mapbox, Tesseract.js OCR, Web Speech API, dan katalog solusi teknologi gratis." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0F1E'/%3E%3Cpath d='M16 5l9 18h-4.4L16 13.4 11.4 23H7z' fill='%2322D3EE'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0A0F1E; --bg2:#0D1428; --panel:#111A36; --line:#1E2A4E;
+    --ink:#EAF2FF; --soft:#8B96B3; --body:#C4CDE4;
+    --cyan:#22D3EE; --violet:#8B5CF6; --green:#34D399; --amber:#FBBF24; --pink:#F472B6; --blue:#60A5FA;
+    --disp:'Sora','Segoe UI',system-ui,sans-serif; --font:'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6}
+  a{color:var(--cyan);text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+  h1,h2,h3{font-family:var(--disp);line-height:1.12;letter-spacing:-.01em;margin:0}
+  .grad{background:linear-gradient(92deg,var(--cyan),var(--violet) 55%,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-family:var(--disp);font-weight:700}
+  .brand i{width:26px;height:30px;border-radius:7px 7px 10px 10px;background:linear-gradient(160deg,var(--cyan),#0E7490);box-shadow:0 6px 16px rgba(34,211,238,.4)}
+  .nav-links{display:flex;gap:2px;flex-wrap:wrap}
+  .nav-links a{color:var(--soft);font-size:.86rem;font-weight:600;padding:8px 13px;border-radius:999px;transition:.2s}
+  .nav-links a:hover{color:var(--ink);background:var(--panel)}
+  .btn{display:inline-block;font-weight:700;font-size:.95rem;padding:12px 24px;border-radius:999px;transition:transform .2s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-p{background:var(--cyan);color:#06121F;box-shadow:0 8px 26px rgba(34,211,238,.35)}
+  .btn-g{color:var(--ink);border:1.5px solid #33406B}
+  .btn-wa{background:#25D366;color:#052e16;box-shadow:0 8px 26px rgba(37,211,102,.3)}
+
+  /* hero */
+  .hero{position:relative;padding:clamp(64px,10vw,120px) 0 clamp(48px,7vw,80px);overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(50% 60% at 80% 0%,rgba(139,92,246,.16),transparent 70%),
+    radial-gradient(40% 50% at 10% 10%,rgba(34,211,238,.14),transparent 70%);pointer-events:none}
+  .hero .eyebrow{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);border:1px solid #1E4A57;background:#0D2231;padding:7px 15px;border-radius:999px}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.6rem);margin:22px 0 0;max-width:19ch}
+  .hero p{color:var(--body);font-size:clamp(1rem,1.4vw,1.15rem);max-width:62ch;margin:20px 0 0}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .stats{display:flex;gap:clamp(20px,4vw,54px);flex-wrap:wrap;margin-top:44px}
+  .stats b{display:block;font-family:var(--disp);font-size:1.5rem;color:var(--ink)}
+  .stats span{font-size:.85rem;color:var(--soft)}
+
+  section{padding:clamp(52px,7vw,88px) 0}
+  .sec-head{max-width:720px;margin-bottom:clamp(28px,4vw,44px)}
+  .sec-head .kicker{font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+  .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.4rem);margin-top:10px}
+  .sec-head p{color:var(--body);margin:14px 0 0}
+
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;transition:transform .25s,border-color .25s}
+  .card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--ac,var(--cyan)) 55%,var(--line))}
+  .card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.25rem;background:color-mix(in srgb,var(--ac,var(--cyan)) 16%,var(--bg));border:1px solid color-mix(in srgb,var(--ac,var(--cyan)) 40%,transparent);margin-bottom:16px}
+  .card h3{font-size:1.08rem}
+  .card p{color:var(--body);font-size:.93rem;margin:10px 0 0}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;padding:0;list-style:none}
+  .chips li{font-size:.74rem;font-weight:600;padding:5px 11px;border-radius:999px;background:color-mix(in srgb,var(--ac,var(--cyan)) 14%,var(--bg));color:color-mix(in srgb,var(--ac,var(--cyan)) 80%,#fff);border:1px solid color-mix(in srgb,var(--ac,var(--cyan)) 35%,transparent)}
+
+  /* solusi table-cards */
+  .sol{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+  .sol .card{display:flex;flex-direction:column}
+  .need{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+  .need b{color:var(--ac,var(--cyan))}
+  .sol h3{margin-top:8px}
+  .free{margin-top:auto;padding-top:16px;display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700}
+  .free i{font-style:normal;padding:4px 11px;border-radius:999px;background:#0C2C22;color:#4ADE80;border:1px solid #14532D}
+  .free i.paid{background:#2C230C;color:#FCD34D;border-color:#533F14}
+  .free span{color:var(--soft);font-weight:500}
+
+  /* stack */
+  .stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+  .stack .card ul{margin:12px 0 0;padding:0;list-style:none}
+  .stack .card li{padding:9px 0;border-bottom:1px dashed var(--line);font-size:.92rem;color:var(--body);display:flex;justify-content:space-between;gap:10px}
+  .stack .card li:last-child{border-bottom:0}
+  .stack .card li span{color:var(--soft);font-size:.78rem;white-space:nowrap}
+
+  /* proses */
+  .steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+  .step{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px 24px 24px 24px}
+  .step::before{counter-increment:s;content:"0" counter(s);font-family:var(--disp);font-weight:800;font-size:1.9rem;background:linear-gradient(160deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-bottom:8px}
+  .step h3{font-size:1.02rem} .step p{color:var(--body);font-size:.9rem;margin:8px 0 0}
+
+  /* paket */
+  .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;align-items:stretch}
+  .plan{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:30px;display:flex;flex-direction:column;position:relative}
+  .plan.hot{border-color:var(--cyan);background:linear-gradient(180deg,#0E2233,var(--panel) 40%)}
+  .plan .tag{position:absolute;top:-13px;left:26px;background:var(--cyan);color:#06121F;font-size:.72rem;font-weight:800;letter-spacing:.08em;padding:6px 13px;border-radius:999px}
+  .plan h3{font-size:1.15rem}
+  .plan .price{font-family:var(--disp);font-size:1.9rem;font-weight:800;margin:14px 0 2px}
+  .plan .price small{font-size:.85rem;color:var(--soft);font-weight:500}
+  .plan .note{font-size:.8rem;color:var(--soft)}
+  .plan ul{margin:20px 0;padding:0;list-style:none;flex:1}
+  .plan li{padding:8px 0 8px 28px;position:relative;font-size:.92rem;color:var(--body)}
+  .plan li::before{content:"";position:absolute;left:0;top:13px;width:16px;height:16px;border-radius:50%;background:color-mix(in srgb,var(--cyan) 20%,transparent);border:1.5px solid var(--cyan)}
+  .plan li::after{content:"";position:absolute;left:5px;top:17.5px;width:6px;height:3.5px;border-left:2px solid var(--cyan);border-bottom:2px solid var(--cyan);transform:rotate(-45deg)}
+
+  /* faq */
+  details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px 22px;margin-bottom:12px}
+  summary{cursor:pointer;font-weight:700;padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  summary::after{content:"+";font-family:var(--disp);font-size:1.3rem;color:var(--cyan);transition:.25s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{color:var(--body);margin:0 0 18px;font-size:.94rem}
+
+  /* kontak */
+  .contact{background:linear-gradient(135deg,#0E2233,#170F2E 60%,#2A0F22);border:1px solid #23345E;border-radius:26px;padding:clamp(32px,5vw,56px);text-align:center;position:relative;overflow:hidden}
+  .contact::before{content:"";position:absolute;inset:0;background:radial-gradient(40% 60% at 50% 0%,rgba(34,211,238,.14),transparent 70%)}
+  .contact h2{font-size:clamp(1.6rem,3.4vw,2.3rem)}
+  .contact p{color:var(--body);max-width:56ch;margin:16px auto 0}
+  .contact .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px;position:relative}
+  footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--soft);font-size:.85rem;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+  .rev{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  .rev.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}}
+  @media (max-width:720px){.nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><i></i>Alhadi Cyber Media</a>
+    <nav class="nav-links">
+      <a href="#layanan">Layanan</a><a href="#ai">Fitur AI</a><a href="#solusi">Solusi & Teknologi</a>
+      <a href="#stack">Stack</a><a href="#paket">Paket</a><a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-p" href="#kontak">Konsultasi</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Penawaran Profesional</span>
+    <h1>Setiap kebutuhan dijawab dengan <span class="grad">solusi teknologi nyata.</span></h1>
+    <p>Kami membangun website, webapp, dan SaaS dengan pendekatan hemat-cerdas: memaksimalkan teknologi open-source, free API, dan free-tier kelas dunia — sehingga anggaran Anda mengalir ke hal yang benar-benar penting: produk yang berjalan.</p>
+    <div class="cta">
+      <a class="btn btn-p" href="#solusi">Jelajahi Solusi</a>
+      <a class="btn btn-g" href="index.html">↜ Kembali ke Dunia 3D</a>
+    </div>
+    <div class="stats">
+      <div><b>15+</b><span>Teknologi terintegrasi</span></div>
+      <div><b>Rp0</b><span>Biaya lisensi (open-source)</span></div>
+      <div><b>100%</b><span>Kode milik Anda</span></div>
+      <div><b>24/7</b><span>Chatbot AI melayani</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="layanan">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="kicker">Layanan Inti</span>
+      <h2>Empat pilar yang kami kerjakan</h2>
+      <p>Dari halaman pertama bisnis Anda di internet sampai platform SaaS bertenaga AI.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card rev" style="--ac:var(--blue)">
+        <div class="ic">🌐</div>
+        <h3>Website & Company Profile</h3>
+        <p>Landing page, company profile, katalog produk, dan toko online — cepat, ramah SEO, responsif di semua perangkat, dan mudah dikelola.</p>
+        <ul class="chips"><li>Landing Page</li><li>Company Profile</li><li>E-Commerce</li><li>Blog/CMS</li></ul>
+      </div>
+      <div class="card rev" style="--ac:var(--violet)">
+        <div class="ic">🖥️</div>
+        <h3>WebApp Custom</h3>
+        <p>Aplikasi web sesuai proses bisnis Anda: sistem kasir, inventori, manajemen proyek, booking, HRIS, e-learning, dan lainnya.</p>
+        <ul class="chips"><li>Dashboard</li><li>Multi-user & Role</li><li>Laporan & Ekspor</li><li>Realtime</li></ul>
+      </div>
+      <div class="card rev" style="--ac:var(--cyan)">
+        <div class="ic">☁️</div>
+        <h3>SaaS (Software as a Service)</h3>
+        <p>Ubah ide menjadi produk berlangganan: arsitektur multi-tenant, billing, halaman admin, onboarding pengguna, dan analitik penggunaan.</p>
+        <ul class="chips"><li>Multi-tenant</li><li>Subscription/Billing</li><li>API Publik</li><li>Analitik</li></ul>
+      </div>
+      <div class="card rev" style="--ac:var(--green)">
+        <div class="ic">🤖</div>
+        <h3>Fitur AI (Request)</h3>
+        <p>Tambahkan kecerdasan pada aplikasi berjalan maupun baru: chatbot, analisis data, klasifikasi dokumen, rekomendasi, dan otomasi.</p>
+        <ul class="chips"><li>AI Chatbot</li><li>AI Analysis</li><li>OCR + AI</li><li>Rekomendasi</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ai" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="kicker">Kecerdasan Buatan</span>
+      <h2>Fitur AI yang bisa Anda request</h2>
+      <p>Kami memilih model dan API berdasarkan kebutuhan dan anggaran — banyak di antaranya punya free tier yang cukup untuk memulai.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card rev" style="--ac:var(--green)">
+        <div class="ic">💬</div><h3>AI Chatbot</h3>
+        <p>Asisten 24 jam di website Anda: menjawab pertanyaan produk, menangkap leads, dan meneruskan ke WhatsApp bila perlu manusia. Bisa dilatih dengan dokumen bisnis Anda (RAG).</p>
+        <ul class="chips"><li>Gemini API (free tier)</li><li>Groq / Llama</li><li>RAG</li></ul>
+      </div>
+      <div class="card rev" style="--ac:var(--cyan)">
+        <div class="ic">📊</div><h3>AI Analysis</h3>
+        <p>Membaca data penjualan/operasional lalu menyajikan ringkasan, tren, anomali, dan rekomendasi dalam bahasa Indonesia yang mudah dipahami.</p>
+        <ul class="chips"><li>Ringkasan Otomatis</li><li>Deteksi Tren</li><li>Chart.js / ECharts</li></ul>
+      </div>
+      <div class="card rev" style="--ac:var(--amber)">
+        <div class="ic">📄</div><h3>Dokumen Cerdas</h3>
+        <p>Scan → OCR → ekstraksi terstruktur: KTP, faktur, nota, arsip. Digabungkan dengan AI untuk merapikan hasil menjadi data siap pakai.</p>
+        <ul class="chips"><li>Tesseract.js</li><li>PDF.js</li><li>Ekstraksi Terstruktur</li></ul>
+      </div>
+      <div class="card rev" style="--ac:var(--pink)">
+        <div class="ic">🎙️</div><h3>Perintah & Dikte Suara</h3>
+        <p>Input tanpa mengetik: pencarian suara, dikte formulir, dan text-to-speech untuk aksesibilitas — langsung dari browser, tanpa biaya API.</p>
+        <ul class="chips"><li>Web Speech API</li><li>Speech-to-Text</li><li>Text-to-Speech</li></ul>
+      </div>
+      <div class="card rev" style="--ac:var(--violet)">
+        <div class="ic">🧭</div><h3>Rekomendasi & Personalisasi</h3>
+        <p>Saran produk/konten berdasarkan perilaku pengguna, pencarian pintar (semantic search), dan segmentasi pelanggan otomatis.</p>
+        <ul class="chips"><li>Embeddings</li><li>Semantic Search</li><li>Segmentasi</li></ul>
+      </div>
+      <div class="card rev" style="--ac:var(--blue)">
+        <div class="ic">⚙️</div><h3>Otomasi Alur Kerja</h3>
+        <p>Balas email draf otomatis, klasifikasi tiket, moderasi konten, dan generate deskripsi produk — mengurangi pekerjaan repetitif tim Anda.</p>
+        <ul class="chips"><li>Auto-draft</li><li>Klasifikasi</li><li>Content Gen</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solusi">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="kicker">Kebutuhan → Solusi</span>
+      <h2>Katalog solusi teknologi (banyak yang gratis)</h2>
+      <p>Ini cara kami berpikir: setiap kebutuhan dipetakan ke teknologi teruji — open-source, free API, atau free tier — sebelum mempertimbangkan opsi berbayar.</p>
+    </div>
+    <div class="sol">
+      <div class="card rev" style="--ac:var(--cyan)">
+        <span class="need">Butuh: <b>Peta wilayah / sebaran cabang</b></span>
+        <h3>Mapbox GL JS · Leaflet + OpenStreetMap</h3>
+        <p>Peta interaktif, pemetaan wilayah (polygon), heatmap sebaran pelanggan, rute, dan pelacakan. Mapbox gratis hingga 50.000 map load/bulan; Leaflet + OSM sepenuhnya gratis.</p>
+        <div class="free"><i>GRATIS / FREE TIER</i><span>mapbox.com · leafletjs.com</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--amber)">
+        <span class="need">Butuh: <b>Digitalisasi dokumen fisik</b></span>
+        <h3>Tesseract.js (OCR)</h3>
+        <p>OCR 100+ bahasa langsung di browser — nota, arsip, KTP, faktur menjadi teks yang bisa dicari. Berjalan client-side: tanpa biaya server, data tidak keluar dari perangkat.</p>
+        <div class="free"><i>GRATIS</i><span>github.com/naptha/tesseract.js</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--pink)">
+        <span class="need">Butuh: <b>Input suara & aksesibilitas</b></span>
+        <h3>Web Speech API</h3>
+        <p>Speech recognition dan text-to-speech bawaan browser — pencarian suara, dikte formulir, pembacaan konten. Nol dependensi, nol biaya API.</p>
+        <div class="free"><i>GRATIS</i><span>API bawaan browser</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--green)">
+        <span class="need">Butuh: <b>Chatbot pintar hemat biaya</b></span>
+        <h3>Gemini API · Groq (Llama)</h3>
+        <p>LLM kelas dunia dengan free tier untuk memulai: chatbot produk, penjawab FAQ, dan asisten internal. Skala naik, bayar seperlunya.</p>
+        <div class="free"><i>FREE TIER</i><span>ai.google.dev · groq.com</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--violet)">
+        <span class="need">Butuh: <b>Login, database, realtime</b></span>
+        <h3>Supabase · Firebase</h3>
+        <p>Autentikasi (email, Google), database PostgreSQL, penyimpanan file, dan sinkronisasi realtime — backend siap pakai dengan free tier memadai untuk MVP.</p>
+        <div class="free"><i>FREE TIER</i><span>supabase.com · firebase.google.com</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--blue)">
+        <span class="need">Butuh: <b>Grafik & dashboard data</b></span>
+        <h3>Chart.js · Apache ECharts</h3>
+        <p>Visualisasi penjualan, KPI, dan tren: line, bar, pie, heatmap, hingga chart realtime — ringan dan sepenuhnya open-source.</p>
+        <div class="free"><i>GRATIS</i><span>chartjs.org · echarts.apache.org</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--amber)">
+        <span class="need">Butuh: <b>Ekspor laporan Excel / PDF</b></span>
+        <h3>SheetJS · ExcelJS · jsPDF</h3>
+        <p>Unduh laporan .xlsx dengan format rapi, cetak invoice PDF, dan impor data dari spreadsheet pengguna.</p>
+        <div class="free"><i>GRATIS</i><span>sheetjs.com · github.com/exceljs</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--green)">
+        <span class="need">Butuh: <b>Pembayaran online (Indonesia)</b></span>
+        <h3>Midtrans · Xendit</h3>
+        <p>QRIS, VA bank, e-wallet, kartu — terintegrasi resmi dengan notifikasi otomatis ke aplikasi Anda. Tanpa biaya bulanan, bayar per transaksi.</p>
+        <div class="free"><i class="paid">PAY-AS-YOU-GO</i><span>midtrans.com · xendit.co</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--cyan)">
+        <span class="need">Butuh: <b>Notifikasi WhatsApp / push</b></span>
+        <h3>wa.me Deep Link · Web Push (FCM)</h3>
+        <p>Tombol chat WhatsApp dengan pesan terisi otomatis (gratis), plus push notification browser untuk pengumuman dan pengingat.</p>
+        <div class="free"><i>GRATIS</i><span>wa.me · Firebase Cloud Messaging</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--pink)">
+        <span class="need">Butuh: <b>QR code & barcode</b></span>
+        <h3>qrcode.js · ZXing</h3>
+        <p>Generate QR untuk tiket/pembayaran/absensi dan scan barcode dari kamera perangkat — tanpa hardware khusus.</p>
+        <div class="free"><i>GRATIS</i><span>github.com/zxing-js</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--violet)">
+        <span class="need">Butuh: <b>Jadwal, booking, kalender</b></span>
+        <h3>FullCalendar</h3>
+        <p>Kalender drag-and-drop untuk booking ruangan, jadwal terapi/kelas, dan agenda tim — tampilan bulan/minggu/hari.</p>
+        <div class="free"><i>GRATIS</i><span>fullcalendar.io</span></div>
+      </div>
+      <div class="card rev" style="--ac:var(--blue)">
+        <span class="need">Butuh: <b>Chat & monitoring realtime</b></span>
+        <h3>Socket.io · Supabase Realtime</h3>
+        <p>Live chat CS, papan antrian, notifikasi instan, dan dashboard yang memperbarui diri tanpa refresh.</p>
+        <div class="free"><i>GRATIS</i><span>socket.io</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="kicker">Teknologi & Repositori</span>
+      <h2>Stack modern yang kami gunakan</h2>
+      <p>Dipilih karena matang, terdokumentasi baik, komunitas besar — dan kode sepenuhnya menjadi milik Anda.</p>
+    </div>
+    <div class="stack">
+      <div class="card rev" style="--ac:var(--cyan)">
+        <h3>Frontend</h3>
+        <ul>
+          <li>React + Next.js <span>SEO & kecepatan</span></li>
+          <li>Vite <span>build kilat</span></li>
+          <li>Tailwind CSS <span>UI konsisten</span></li>
+          <li>TypeScript <span>minim bug</span></li>
+        </ul>
+      </div>
+      <div class="card rev" style="--ac:var(--violet)">
+        <h3>Backend & API</h3>
+        <ul>
+          <li>Node.js / Express <span>API cepat</span></li>
+          <li>Laravel (PHP) <span>opsi enterprise</span></li>
+          <li>REST & WebSocket <span>integrasi luas</span></li>
+          <li>JWT / OAuth <span>keamanan</span></li>
+        </ul>
+      </div>
+      <div class="card rev" style="--ac:var(--green)">
+        <h3>Database</h3>
+        <ul>
+          <li>PostgreSQL <span>andal & teruji</span></li>
+          <li>MySQL / MariaDB <span>familiar</span></li>
+          <li>Supabase <span>BaaS free tier</span></li>
+          <li>Redis <span>cache & antrian</span></li>
+        </ul>
+      </div>
+      <div class="card rev" style="--ac:var(--amber)">
+        <h3>Deploy & Infrastruktur</h3>
+        <ul>
+          <li>Vercel / Netlify <span>hosting gratis</span></li>
+          <li>Cloudflare <span>CDN & proteksi</span></li>
+          <li>VPS + Docker <span>kendali penuh</span></li>
+          <li>GitHub Actions <span>CI/CD</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="proses">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="kicker">Cara Kerja</span>
+      <h2>Proses yang transparan</h2>
+    </div>
+    <div class="steps">
+      <div class="step rev"><h3>Konsultasi & Analisis</h3><p>Gratis. Kami dengarkan kebutuhan, lalu petakan ke solusi teknologi paling hemat yang tetap memenuhi tujuan.</p></div>
+      <div class="step rev"><h3>Proposal & Estimasi</h3><p>Ruang lingkup, teknologi, timeline, dan biaya tertulis jelas — tanpa biaya tersembunyi.</p></div>
+      <div class="step rev"><h3>Desain UI/UX</h3><p>Mockup disetujui dulu sebelum satu baris kode ditulis, agar hasil sesuai bayangan Anda.</p></div>
+      <div class="step rev"><h3>Development Iteratif</h3><p>Progres bisa dipantau di URL staging; masukan Anda masuk di tiap iterasi.</p></div>
+      <div class="step rev"><h3>Testing & Launching</h3><p>Uji fungsi, kecepatan, dan keamanan; lalu rilis ke domain Anda beserta setup analytics.</p></div>
+      <div class="step rev"><h3>Garansi & Dukungan</h3><p>Perbaikan bug gratis pada masa garansi, pelatihan penggunaan, dan opsi maintenance bulanan.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="paket" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="kicker">Investasi</span>
+      <h2>Paket penawaran</h2>
+      <p>Angka di bawah adalah titik awal — penawaran final selalu mengikuti ruang lingkup yang kita sepakati bersama.</p>
+    </div>
+    <div class="plans">
+      <div class="plan rev">
+        <h3>Starter — Website</h3>
+        <div class="price">Rp 1,5 jt<small> mulai dari</small></div>
+        <span class="note">Landing page / company profile</span>
+        <ul>
+          <li>Desain custom responsif (bukan template kaku)</li>
+          <li>Hingga 5 halaman + form kontak & tombol WhatsApp</li>
+          <li>SEO dasar + Google Analytics</li>
+          <li>Hosting gratis (Vercel/Netlify) + setup domain</li>
+          <li>Garansi bug 30 hari</li>
+        </ul>
+        <a class="btn btn-g" href="#kontak" style="text-align:center">Diskusikan</a>
+      </div>
+      <div class="plan hot rev">
+        <span class="tag">PALING DIMINATI</span>
+        <h3>Business — WebApp</h3>
+        <div class="price">Rp 7 jt<small> mulai dari</small></div>
+        <span class="note">Aplikasi web sesuai proses bisnis</span>
+        <ul>
+          <li>Dashboard admin + manajemen pengguna & role</li>
+          <li>Database & API (Supabase/PostgreSQL)</li>
+          <li>Laporan + ekspor Excel/PDF</li>
+          <li>1 integrasi lanjutan (peta / OCR / suara / pembayaran)</li>
+          <li>Staging URL untuk pantau progres</li>
+          <li>Garansi bug 60 hari + pelatihan</li>
+        </ul>
+        <a class="btn btn-p" href="#kontak" style="text-align:center">Diskusikan</a>
+      </div>
+      <div class="plan rev">
+        <h3>Scale — SaaS + AI</h3>
+        <div class="price">Rp 20 jt<small> mulai dari</small></div>
+        <span class="note">Platform berlangganan bertenaga AI</span>
+        <ul>
+          <li>Arsitektur multi-tenant + billing/langganan</li>
+          <li>AI Chatbot atau AI Analysis terintegrasi</li>
+          <li>Integrasi lanjutan tanpa batas jenis (Mapbox, OCR, realtime…)</li>
+          <li>CI/CD + monitoring + dokumentasi teknis</li>
+          <li>Garansi bug 90 hari + dukungan prioritas</li>
+        </ul>
+        <a class="btn btn-g" href="#kontak" style="text-align:center">Diskusikan</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <span class="kicker">FAQ</span>
+      <h2>Pertanyaan yang sering diajukan</h2>
+    </div>
+    <div class="rev">
+      <details open>
+        <summary>Kenapa banyak solusi yang gratis? Apa kualitasnya terjamin?</summary>
+        <p>Teknologi seperti Tesseract.js, Leaflet, Chart.js, dan Web Speech API adalah proyek open-source matang yang dipakai jutaan aplikasi di dunia. "Gratis" di sini berarti tanpa biaya lisensi — Anda tetap mendapatkan pengerjaan profesional, dan anggaran berpindah dari lisensi ke kualitas pembangunan.</p>
+      </details>
+      <details>
+        <summary>Berapa lama pengerjaannya?</summary>
+        <p>Website starter umumnya 1–2 minggu, webapp 3–8 minggu, dan SaaS menyesuaikan ruang lingkup. Timeline pasti tercantum di proposal.</p>
+      </details>
+      <details>
+        <summary>Apakah saya bisa request fitur AI di aplikasi yang sudah ada?</summary>
+        <p>Bisa. Fitur AI (chatbot, analisis, OCR, rekomendasi) dapat ditambahkan ke aplikasi berjalan melalui API tanpa membangun ulang dari nol.</p>
+      </details>
+      <details>
+        <summary>Apakah kode dan akun menjadi milik saya?</summary>
+        <p>Ya, 100%. Repository, domain, hosting, dan seluruh akun layanan didaftarkan atas nama Anda. Kami tidak mengunci klien.</p>
+      </details>
+      <details>
+        <summary>Bagaimana skema pembayarannya?</summary>
+        <p>Umumnya DP 50% saat mulai dan pelunasan saat serah terima, atau bertahap per milestone untuk proyek besar — fleksibel dan tertulis di proposal.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="kontak" style="padding-top:0">
+  <div class="wrap">
+    <div class="contact rev">
+      <h2>Ceritakan kebutuhan Anda.<br/><span class="grad">Kami jawab dengan solusi.</span></h2>
+      <p>Konsultasi awal gratis — dapatkan rekomendasi teknologi, gambaran fitur, dan estimasi biaya tanpa komitmen apa pun.</p>
+      <div class="cta">
+        <a class="btn btn-wa" href="https://wa.me/6281234567890?text=Halo%20Alhadi%20Cyber%20Media%2C%20saya%20ingin%20konsultasi%20proyek." target="_blank" rel="noopener">💬 Chat WhatsApp</a>
+        <a class="btn btn-p" href="mailto:ali.coolz30@gmail.com?subject=Konsultasi%20Proyek">✉️ Email Kami</a>
+      </div>
+    </div>
+    <footer>
+      <span>© 2026 Alhadi Cyber Media — Website · WebApp · SaaS · AI</span>
+      <span><a href="index.html">Beranda 3D</a> · <a href="#layanan">Layanan</a> · <a href="#paket">Paket</a></span>
+    </footer>
+  </div>
+</section>
+
+<script>
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.rev').forEach(n => io.observe(n));
+</script>
+</body>
+</html>
