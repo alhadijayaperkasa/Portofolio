@@ -73,6 +73,34 @@
 }
 .platform-sidebar.is-open { transform: translateX(0); }
 
+/* ─── Brand Styling (Initial ACM + Alhadi Cyber Media Subtitle, No Icons) ─ */
+.sw-brand__mark { display: none !important; }
+.sw-brand {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  line-height: 1.1 !important;
+  text-decoration: none !important;
+}
+.sw-brand__name {
+  font-family: var(--sw-font-display, 'Sora', sans-serif) !important;
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  color: #ffffff !important;
+}
+.sw-brand::after {
+  content: "Alhadi Cyber Media";
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--sw-ink-soft, #8B96B3);
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
 /* Sidebar header */
 .platform-sidebar-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -81,14 +109,8 @@
   flex-shrink: 0;
 }
 .platform-sidebar-brand {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
   text-decoration: none; color: #fff;
-  font-weight: 700; font-family: var(--sw-font-display, sans-serif); font-size: 14px;
-}
-.platform-sidebar-brand i {
-  width: 20px; height: 24px; border-radius: 5px;
-  background: linear-gradient(160deg, var(--sw-accent, #22D3EE), color-mix(in srgb, var(--sw-accent, #22D3EE) 55%, #000));
-  display: inline-block; flex-shrink: 0;
 }
 .platform-sidebar-close {
   background: rgba(255,255,255,0.05); border: 0; color: #8B96B3;

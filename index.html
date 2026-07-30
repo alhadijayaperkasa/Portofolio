@@ -359,7 +359,10 @@
   <!-- Left Sidebar Drawer -->
   <aside class="platform-sidebar" id="platformSidebar">
     <div class="platform-sidebar-header">
-      <a class="platform-sidebar-brand" href="#top"><i></i> Alhadi Cyber Media</a>
+      <a class="platform-sidebar-brand" href="#top">
+        <span style="font-size:18px; font-weight:800; color:#fff; letter-spacing:0.06em; line-height:1; font-family:var(--sw-font-display, sans-serif);">ACM</span>
+        <span style="font-size:9px; font-weight:600; color:#8B96B3; letter-spacing:0.08em; text-transform:uppercase;">Alhadi Cyber Media</span>
+      </a>
       <button class="platform-sidebar-close" id="sidebarClose" type="button" aria-label="Tutup menu">&times;</button>
     </div>
 
@@ -1344,7 +1347,7 @@
     const pic = (n) => `assets/poster/scene${n}.jpg`;
 
     mountScrollWorld(document.getElementById('world'), {
-      brand: { name: 'Alhadi Cyber Media', href: '#top' },
+      brand: { name: 'ACM', href: '#top' },
       cta: { label: 'Kalkulator', href: '#kalkulator-spesifikasi' },
       hint: 'scroll untuk menyelam',
       diveScroll: 1.35,
